@@ -1,0 +1,15 @@
+{
+  "name":"print()",
+  "tags":[
+    "Print",
+    "print",
+    "print()",
+    "print(s)",
+    ""
+  ],
+  "implemented":false,
+  "desc":[
+    "Prints string arg to terminal",
+    ""
+  ]
+}

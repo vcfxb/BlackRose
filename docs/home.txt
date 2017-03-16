@@ -1,0 +1,31 @@
+What's new in v0.0.5:
+  - fixed documentation bugs
+  - finished documentation engine
+
+What's new in v0.0.4:
+  - documentation search
+  - advanced search
+
+What's new in v0.0.3:
+  - docs
+    - solved scrolling bug
+  - scripts
+  - everything
+  - blackrose
+  - radon standard libraries
+
+What's new in v0.0.2:
+  - docs
+  - scripts
+  - everything
+  - blackrose
+  - radon standard libraries
+
+What's new in v0.0.1:
+  - Initialization
+  - everything
+  - blackrose
+  - lib
+  - src
+  - bin
+  - this doc file

@@ -1,0 +1,42 @@
+#!/bin/bash
+VERSION="v0.0.5"
+
+_script="$(readlink -f ${BASH_SOURCE[0]})"
+_base="$(dirname $(dirname $_script))"
+
+if [ "$#" -ne 0 ];
+then
+  :
+else
+  printf "Requires args, run blackrose -h\n";
+  exit 1;
+fi
+
+for arg in $@
+do
+  case $arg in
+    $0) ;;
+    '-v' | '--version') printf "[ BlackRose scripting language ]\nVersion: $VERSION \n";;
+    '-V' | '--version-number') printf "$VERSION\n";;
+    '-i' | '--interactive') python3.5 $_base/src/BlackRose.py ;;
+    '-d' | '--documentation' | 'docs') python3.5 $_base/docs/docs.py $VERSION ;;
+    '-h' | '--help' | '-?' | '--usage') printf """
+BlackRose
+usage:
+  blackrose [args] [file.rose]
+
+Arguments:
+  -v, --version                        : Prints version info
+  -V, --version-number                 : Prints just version number
+  -h, --help, -?, --usage              : Prints this help
+  -i, --interactive                    : Run interactively in the terminal
+  -d, --documentation, docs            : Opens documentation interface
+    \n""";;
+    *)  if [ -f "$arg" ];
+        then
+          python3.5 $_base/src/BlackRose.py $arg;
+        else
+          printf "$arg is not a recognized argument.\n" && exit 1;
+        fi ;;
+  esac
+done
