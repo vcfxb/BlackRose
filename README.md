@@ -1,4 +1,5 @@
 # BlackRose scripting language
+[![Build Status](https://travis-ci.org/Alfriadox/BlackRose.svg?branch=master)](https://travis-ci.org/Alfriadox/BlackRose)
 ## Not anywhere near ready for use.
 #### Someone needs to write a README
 
