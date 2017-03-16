@@ -7,6 +7,6 @@ install: true
 script:
   - make
   - ./bin/blackrose -v
-  - ./bin/blackrose update && cd BlackRose
+  - ./bin/blackrose update
   - ls -halts
   
