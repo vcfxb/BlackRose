@@ -24,6 +24,7 @@ do
       cd $(dirname $_base)
       rm -rfv $_base
       git clone -b stable --single-branch https://github.com/Alfriadox/BlackRose.git
+      cd $_base
       ;;
     '-h' | '--help' | '-?' | '--usage') printf """
 BlackRose
