@@ -1,4 +1,4 @@
-all: blackrose radon path
+all: blackrose path
 
 blackrose:
 	chmod +x bin/blackrose
