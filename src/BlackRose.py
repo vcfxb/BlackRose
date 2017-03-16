@@ -4,7 +4,7 @@
 import sys, os
 
 # blackrose libraries
-from lib.preproc import preprocessor
+from lib.preproc import preprocessor as preproc
 import lib.error as pyerror
 import lib.blackroseerrors as error
 
@@ -15,20 +15,23 @@ def main(args):
     elif len(args) == 2:
         runFile(open(sys.argv[1], 'r'))
     else:
-        runPrompt()
+        runPrompt(['radon'])
 
 def runFile(s):
-    run(s.read())
+    try:
+        run(s.readlines())
+    finally:
+        s.close()
 
-def runPrompt():
+def runPrompt(prompt):
     while True:
         try:
-            t = input(':radon:> ')
+            t = input(':'.join(prompt))
             run(t)
         except KeyboardInterrupt:
             print('\nexit')
             sys.exit(0)
 def run(s):
-    print(s)
+    print(''.join(preproc(s)))
 
 main(sys.argv)
