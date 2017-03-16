@@ -20,6 +20,11 @@ do
     '-V' | '--version-number') printf "$VERSION\n";;
     '-i' | '--interactive') python3.5 $_base/src/BlackRose.py ;;
     '-d' | '--documentation' | 'docs') python3.5 $_base/docs/docs.py $VERSION ;;
+    '-u' | '--update' | 'update')
+      cd $(dirname $_base)
+      rm -rfv $_base
+      git clone -b stable --single-branch https://github.com/Alfriadox/BlackRose.git
+      ;;
     '-h' | '--help' | '-?' | '--usage') printf """
 BlackRose
 usage:
@@ -31,6 +36,7 @@ Arguments:
   -h, --help, -?, --usage              : Prints this help
   -i, --interactive                    : Run interactively in the terminal
   -d, --documentation, docs            : Opens documentation interface
+  -u, --update, update                 : Update Blackrose to stable branch
     \n""";;
     *)  if [ -f "$arg" ];
         then
