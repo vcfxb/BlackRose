@@ -7,4 +7,5 @@ install: true
 script:
   - make
   - ./bin/blackrose -v
+  - ./bin/blackrose update
   
