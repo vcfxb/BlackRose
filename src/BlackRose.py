@@ -19,7 +19,7 @@ def main(args):
 
 def runFile(s):
     try:
-        run(s.readlines())
+        print(preproc(s.readlines()))
     finally:
         s.close()
 
@@ -27,11 +27,9 @@ def runPrompt(prompt):
     while True:
         try:
             t = input(':'.join(prompt))
-            run(t)
+            print(preproc([t]))
         except KeyboardInterrupt:
             print('\nexit')
             sys.exit(0)
-def run(s):
-    print(''.join(preproc(s)))
 
 main(sys.argv)
