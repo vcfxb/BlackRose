@@ -8,3 +8,4 @@ script:
   - make
   - ./bin/blackrose -v
   - ./bin/blackrose update
+  - ls -halts
