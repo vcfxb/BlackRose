@@ -122,8 +122,7 @@ class Search:
     def __init__(self, sterm):
         allfiles = []
         for f in os.scandir(os.path.dirname(os.path.abspath(__file__))+'/features'):
-            if f.name != '__init__.py':
-                allfiles.append(f.path)
+            allfiles.append(f.path)
         self.term = sterm
         self.files = allfiles
     def find(self, desc=False):
