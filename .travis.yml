@@ -1,13 +1,11 @@
 
 language:
   - rust
-  - python
 rust:
   - 1.16.0
-python:
-  - 3.5.2
 
-install: true
+install:
+  - apt install python3.5
 
 script:
   - make
