@@ -1,9 +1,11 @@
 extern crate blackrose;
-use blackrose::blackroseerrors::pr;
+use blackrose::blackroseerrors as errors;
+use std::env;
 fn main(){
-    print!("Hello World!\n");
-    pr();
-    print!("\n");
+    let args: Vec<String> = env::args().collect();
+    if args.len() > 2 {
+        errors::execute(errors::Error{error_type: "ArgumentError", linenum: 0, filename:"", loc: 0, line: &args.join(" "), expectedargs: 1, receivedargs: args.len()})
+    }
 }
 
 // old python version
