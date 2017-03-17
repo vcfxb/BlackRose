@@ -129,8 +129,8 @@ class Search:
         self.results = []
         for efile in self.files:
             f = open(efile, 'r')
-            decoded = Decode(f.read().replace('\n',''))                     # JSON files must have \\n instead of '\n'
-            if self.term in decoded["tags"]:
+            decoded = Decode(f.read())
+            if self.term.lower().replace(' ','') in decoded["tags"]:
                 self.results.append(SearchResult(decoded["name"], decoded["desc"], not decoded["implemented"]))
                 self.files[self.files.index(efile)] = None
             if desc == True:

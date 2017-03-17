@@ -7,6 +7,7 @@ import sys, os
 from lib.preproc import preprocessor as preproc
 import lib.error as pyerror
 import lib.blackroseerrors as error
+from lib.lexer import lex
 
 
 def main(args):
@@ -19,7 +20,7 @@ def main(args):
 
 def runFile(s):
     try:
-        print(preproc(s.readlines()))
+        print(lex(preproc(s.readlines())))
     finally:
         s.close()
 
@@ -27,7 +28,7 @@ def runPrompt(prompt):
     while True:
         try:
             t = input(':'.join(prompt))
-            print(preproc([t]))
+            print(lex(preproc([t])))
         except KeyboardInterrupt:
             print('\nexit')
             sys.exit(0)
