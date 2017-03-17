@@ -1,5 +1,5 @@
 #!/bin/bash
-VERSION="v0.0.5"
+VERSION="v0.1.0"
 
 _script="$(readlink -f ${BASH_SOURCE[0]})"
 _base="$(dirname $(dirname $_script))"
@@ -18,13 +18,14 @@ do
     $0) ;;
     '-v' | '--version') printf "[ BlackRose scripting language ]\nVersion: $VERSION \n";;
     '-V' | '--version-number') printf "$VERSION\n";;
-    '-i' | '--interactive') python3.5 $_base/src/BlackRose.py ;;
+    '-i' | '--interactive') . $_base/src/BlackRose ;;
     '-d' | '--documentation' | 'docs') python3.5 $_base/docs/docs.py $VERSION ;;
     '-u' | '--update' | 'update')
       cd $(dirname $_base)
       rm -rfv $_base
       git clone -b stable --single-branch https://github.com/Alfriadox/BlackRose.git
       cd $_base
+      make
       ;;
     '-h' | '--help' | '-?' | '--usage') printf """
 BlackRose
