@@ -1,0 +1,23 @@
+{
+  "name":"Documentation",
+  "tags":[
+    "docs",
+    "doc",
+    "documentation",
+    ""
+  ],
+  "implemented":true,
+  "desc":[
+    "Documentation",
+    "  The documentation engine for Black rose is written in",
+    "Python despite the fact that the rest of the project moved from",
+    "being written in Python to being written in Rust after version",
+    "0.0.6.",
+    "",
+    "  Each entry in the documentation is generated from a JSON file",
+    "in Black Rose's docs/features directory. The JSON file includes",
+    "a name, a list of search tags, a Boolean value denoting",
+    "implementation, and a list of lines for the description.",
+    ""
+  ]
+}
