@@ -1,3 +1,6 @@
+What's new in version 0.1.0:
+  - Everything is in Rust 1.16.0 now.
+
 What's new in v0.0.6:
   - Added comments
   - finished preprocessor (sort of)
