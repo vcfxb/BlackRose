@@ -1,6 +1,6 @@
 language: python
 python:
-  - 3.5.2
+  - 3.5.3
 language: rust
 rust:
   - 1.16.0
@@ -11,4 +11,4 @@ script:
   - make
   - ./bin/blackrose -v
   - ./bin/blackrose -d
-  - ./src/BlackRose
+  - ./target/release/blackrose BlackRoseExamples/HelloWorld.rose
