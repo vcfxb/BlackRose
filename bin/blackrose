@@ -18,7 +18,7 @@ do
     $0) ;;
     '-v' | '--version') printf "[ BlackRose scripting language ]\nVersion: $VERSION \n";;
     '-V' | '--version-number') printf "$VERSION\n";;
-    '-i' | '--interactive') . $_base/src/BlackRose ;;
+    '-i' | '--interactive') $_base/target/release/blackrose ;;
     '-d' | '--documentation' | 'docs') python3.5 $_base/docs/docs.py $VERSION ;;
     '-u' | '--update' | 'update')
       cd $(dirname $_base)
@@ -42,7 +42,7 @@ Arguments:
     \n""";;
     *)  if [ -f "$arg" ];
         then
-          python3.5 $_base/src/BlackRose.py $arg;
+          $_base/target/release/blackrose $arg;
         else
           printf "$arg is not a recognized argument.\n" && exit 1;
         fi ;;
