@@ -4,11 +4,9 @@ language:
 rust:
   - 1.16.0
 
-install:
-  - apt install python3.5
+install: true
 
 script:
   - make
   - ./bin/blackrose -v
   - ./target/release/blackrose BlackRoseExamples/HelloWorld.rose
-  - ./bin/blackrose -d
