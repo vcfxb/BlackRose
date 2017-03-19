@@ -6,7 +6,7 @@
     "comment",
     ""
   ],
-  "implemented":true,
+  "implemented":false,
   "desc":[
     "    # Comment",
     "Single line comment.",

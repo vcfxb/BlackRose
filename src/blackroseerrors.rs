@@ -1,4 +1,5 @@
-fn get_err_sig(error: &str) -> (u8, u8) {
+use std::process;
+fn get_err_sig(error: &str) -> (i32, i32) {
     match error {
         "NoError" => (0,1),
         "ArgumentError" => (1,2),
@@ -7,18 +8,17 @@ fn get_err_sig(error: &str) -> (u8, u8) {
 }
 pub struct Error<'a> {
     pub error_type: &'a str,
-    pub linenum: u64,
-    pub loc: u64,
+    pub linenum: usize,
+    pub loc: usize,
     pub line: &'a str,
     pub filename: &'a str,
-    pub expectedargs: u8,
-    pub receivedargs: usize,
+    pub info: &'a str,
 }
 
 pub fn execute(err: Error) {
     let mut finalvec = vec![];
     if err.linenum == 0 {
-        finalvec.push(err.error_type.to_string()+" at command prompt:")
+        finalvec.push("\n".to_string()+err.error_type+" at command prompt:\n")
     } else if err.loc == 0 {
         let s = err.linenum.to_string();
         let ss: &str = &s;
@@ -31,7 +31,23 @@ pub fn execute(err: Error) {
         s = s+ ll;
         finalvec.push(err.error_type.to_string()+" at "+&s+" in file "+err.filename+":")
     }
+    {
+        let templine = "  ".to_string()+err.line;
+        let t: &str = &templine;
+        finalvec.push(t.to_string());
+    }
+    if err.linenum == 0 {
+        let mut templine = "  ".to_string();
+        templine = templine + ("-".repeat(err.line.len())).as_str()+"\n";
+        finalvec.push(templine)
+    } else {
+        let mut templine = "  ".to_string();
+        templine = templine + ("-".repeat(err.loc-1)).as_str()+"^\n";
+        finalvec.push(templine);
+    }
+    finalvec.push(err.info.to_string());
     println!("{}", finalvec.join("\n"));
+    process::exit(get_err_sig(err.error_type).0);
 }
 
 // Old Python implementation

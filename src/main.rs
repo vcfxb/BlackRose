@@ -4,7 +4,9 @@ use std::env;
 fn main(){
     let args: Vec<String> = env::args().collect();
     if args.len() > 2 {
-        errors::execute(errors::Error{error_type: "ArgumentError", linenum: 0, filename:"", loc: 0, line: &args.join(" "), expectedargs: 1, receivedargs: args.len()})
+        let arglenstring = (args.len()-1).to_string();
+        let error_info = "Expected 1 argument, received ".to_string()+&arglenstring+" arguments.";
+        errors::execute(errors::Error{error_type: "ArgumentError", linenum: 0, filename:"", loc: 0, line: &args.join(" "), info: &error_info });
     }
 }
 
