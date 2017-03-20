@@ -16,7 +16,11 @@ pub struct Error<'a> {
 }
 
 pub fn execute(err: Error) {
+    let mut interactive = false;
     let mut finalvec = vec![];
+    if err.filename == "" {
+        interactive = true;
+    }
     if err.linenum == 0 {
         finalvec.push("\n".to_string()+err.error_type+" at command prompt:\n")
     } else if err.loc == 0 {
@@ -29,7 +33,11 @@ pub fn execute(err: Error) {
         let ll :&str = &l;
         s.push(':');
         s = s+ ll;
-        finalvec.push(err.error_type.to_string()+" at "+&s+" in file "+err.filename+":")
+        if interactive == true {
+            finalvec.push(err.error_type.to_string()+" at "+&s+" during interactive session:");
+        } else {
+            finalvec.push(err.error_type.to_string()+" at "+&s+" in file "+err.filename+":");
+        }
     }
     {
         let templine = "  ".to_string()+err.line;
@@ -47,19 +55,7 @@ pub fn execute(err: Error) {
     }
     finalvec.push(err.info.to_string());
     println!("{}", finalvec.join("\n"));
-    process::exit(get_err_sig(err.error_type).0);
+    if interactive == false {
+        process::exit(get_err_sig(err.error_type).0);
+    }
 }
-
-// Old Python implementation
-//
-// def execute(ERR):
-//     final = []
-//     final.append(ERR.TYPE+" at "+ERR.location+" :\n")
-//     final.append("  "+ERR.line)
-//     if ERR.location == 'command prompt':
-//         final.append('  '+('-'*len(ERR.line)))
-//     else:
-//         final.append('  '+('-'*(int(ERR.location.split(':')[1])-1)+'^'))
-//     final.append('\n'+ERR.info)
-//     print('\n'.join(final))
-//     sys.exit(errors[ERR.TYPE][0])
