@@ -2,7 +2,7 @@ extern crate blackrose;
 use blackrose::blackroseerrors as errors;
 use std::env;
 use std::fs::File;
-use std::io::{self, Read};
+use std::io::{self, Read, Write};
 fn main(){
     let args: Vec<String> = env::args().collect();
     if args.len() > 2 {
@@ -41,18 +41,34 @@ fn run_file(s :String, filename :&str) {
 }
 
 fn run_prompt(inlist :&[&str]) {
-    let mut current_line :usize = 0;
+    let mut current_line :usize = 1;
     loop {
         print!("{}:{} > ", inlist.join(":"), current_line);
+        match io::stdout().flush(){
+            Ok(a) => a,
+            Err(e) => {
+                let error_info = "Could not write to standard output! (Fatal)";
+                errors::execute(errors::Error{error_type: "WriteOutError", linenum: current_line, filename:" ", loc: 0, line:"<interactive prompt>", info: error_info});
+                panic!(e);
+            },
+        };
         let mut buffer = String::new();
         match io::stdin().read_line(&mut buffer) {
             Ok(a) => a,
             Err(e) => {
-                errors::execute(errors::Error{error_type: "StatementError", linenum: current_line, filename:"", loc: 0, line: &buffer.as_str(), info: (buffer.as_str().to_string()+ " contained invalid charcters!").as_str()});
+                errors::execute(errors::Error{error_type: "InvalidCharacterError", linenum: current_line, filename:"", loc: 0, line: &buffer.as_str(), info: (buffer.as_str().to_string()+ " contained invalid charcters!").as_str()});
                 panic!(e);
             },
         };
         println!("{}", buffer);
+        match io::stdout().flush() {
+            Ok(a) => a,
+            Err(e) => {
+                let error_info = "Could not write to standard output! (Fatal)";
+                errors::execute(errors::Error{error_type: "WriteOutError", linenum: current_line, filename:" ", loc: 0, line: buffer.as_str(), info: error_info});
+                panic!(e);
+            },
+        };
         current_line = current_line + 1;
     }
 }

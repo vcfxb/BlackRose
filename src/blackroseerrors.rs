@@ -3,6 +3,8 @@ fn get_err_sig(error: &str) -> (i32, i32) {
     match error {
         "NoError" => (0,1),
         "ArgumentError" => (1,2),
+        "InvalidCharacterError" => (1,3),
+        "WriteOutError" => (1,4),
         _ => (1,0),
     }
 }
@@ -57,5 +59,7 @@ pub fn execute(err: Error) {
     println!("{}", finalvec.join("\n"));
     if interactive == false {
         process::exit(get_err_sig(err.error_type).0);
+    } else {
+        println!("Error Signature: {}", get_err_sig(err.error_type).1);
     }
 }
