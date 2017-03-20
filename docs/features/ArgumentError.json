@@ -11,7 +11,7 @@
     "    ArgumentError",
     "ArgumentError is raised when the",
     "internal main.rs script is passed",
-    "the wrong number of arguments."
+    "the wrong number of arguments.",
     ""
   ]
 }
