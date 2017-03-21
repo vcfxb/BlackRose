@@ -1,3 +1,7 @@
+fn lex() {
+    // Prepeare for this stage of development
+}
+
 //  old python program.
 // def oldlex(linelist):
 //     final = []
