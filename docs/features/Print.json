@@ -1,10 +1,10 @@
 {
   "name":"print()",
   "tags":[
-    "Print",
     "print",
     "print()",
     "print(s)",
+    "print(string)",
     ""
   ],
   "implemented":false,

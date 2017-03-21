@@ -1,0 +1,16 @@
+{
+  "name":"Single line comments",
+  "tags":[
+    "comments",
+    "singlelinecomments",
+    "comment",
+    ""
+  ],
+  "implemented":false,
+  "desc":[
+    "    # Comment",
+    "Single line comment.",
+    "All single line comments start with a #.",
+    ""
+  ]
+}

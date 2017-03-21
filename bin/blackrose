@@ -1,5 +1,5 @@
 #!/bin/bash
-VERSION="v0.0.5"
+VERSION="v0.1.2"
 
 _script="$(readlink -f ${BASH_SOURCE[0]})"
 _base="$(dirname $(dirname $_script))"
@@ -18,13 +18,21 @@ do
     $0) ;;
     '-v' | '--version') printf "[ BlackRose scripting language ]\nVersion: $VERSION \n";;
     '-V' | '--version-number') printf "$VERSION\n";;
-    '-i' | '--interactive') python3.5 $_base/src/BlackRose.py ;;
+    '-i' | '--interactive') $_base/target/release/blackrose ;;
     '-d' | '--documentation' | 'docs') python3.5 $_base/docs/docs.py $VERSION ;;
     '-u' | '--update' | 'update')
       cd $(dirname $_base)
       rm -rfv $_base
       git clone -b stable --single-branch https://github.com/Alfriadox/BlackRose.git
       cd $_base
+      make
+      ;;
+    '--update-master')
+      cd $(dirname $_base)
+      rm -rfv $_base
+      git clone -b master --single-branch https://github.com/Alfriadox/BlackRose.git
+      cd $_base
+      make
       ;;
     '-h' | '--help' | '-?' | '--usage') printf """
 BlackRose
@@ -37,11 +45,12 @@ Arguments:
   -h, --help, -?, --usage              : Prints this help
   -i, --interactive                    : Run interactively in the terminal
   -d, --documentation, docs            : Opens documentation interface
-  -u, --update, update                 : Update Blackrose to stable branch
+  -u, --update, update                 : Update Black Rose to stable branch
+      --update-master                  : update Black Rose to master (maybe unstable)
     \n""";;
     *)  if [ -f "$arg" ];
         then
-          python3.5 $_base/src/BlackRose.py $arg;
+          $_base/target/release/blackrose $arg;
         else
           printf "$arg is not a recognized argument.\n" && exit 1;
         fi ;;

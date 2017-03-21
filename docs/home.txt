@@ -1,3 +1,15 @@
+What's new in version 0.1.2:
+ - Basic command line functionality and Errors complete
+ - preparing to move forward to developing a parser, etc.
+
+What's new in version 0.1.0:
+  - Everything is in Rust 1.16.0 now.
+
+What's new in v0.0.6:
+  - Added comments
+  - finished preprocessor (sort of)
+  - working on lexical analyzer
+
 What's new in v0.0.5:
   - fixed documentation bugs
   - finished documentation engine

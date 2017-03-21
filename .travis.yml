@@ -1,10 +1,12 @@
-language: python
 
-python:
-  - 3.5.2
+language:
+  - rust
+rust:
+  - 1.16.0
+
 install: true
 
 script:
   - make
   - ./bin/blackrose -v
-  - ./bin/blackrose update
+  - ./target/release/blackrose BlackRoseExamples/HelloWorld.rose

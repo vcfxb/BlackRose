@@ -1,0 +1,17 @@
+{
+  "name":"WriteOutError",
+  "tags":[
+    "error",
+    "errors",
+    "writeouterror",
+    ""
+  ],
+  "implemented":true,
+  "desc":[
+    "    WriteOutError",
+    "This error is raised when the standard",
+    "output is inaccessable in interactive mode",
+    "resulting in a crash."
+    ""
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "name":"Black Rose scripting language",
+  "tags":[
+    "blackrose",
+    "language",
+    "about",
+    ""
+  ],
+  "implemented":true,
+  "desc":[
+    "  Black Rose scripting language.",
+    "Base documentation for Black Rose.",
+    "Black Rose was inspired by Python, Rust,",
+    "and Haskell.",
+    ""
+  ]
+}
