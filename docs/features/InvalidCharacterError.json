@@ -1,5 +1,5 @@
 {
-  "name":"ArgumentError",
+  "name":"InvalidCharacterError",
   "tags":[
     "error",
     "errors",
