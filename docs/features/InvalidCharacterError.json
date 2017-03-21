@@ -1,0 +1,16 @@
+{
+  "name":"ArgumentError",
+  "tags":[
+    "error",
+    "errors",
+    "invalidcharactererror",
+    ""
+  ],
+  "implemented":true,
+  "desc":[
+    "   InvalidCharcterError",
+    "This error is raised when a non-UTF-8 charcter",
+    "is passed into the input, resulting in a crash.",
+    ""
+  ]
+}
