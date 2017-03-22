@@ -1,6 +1,7 @@
-#imports
+#!/usr/bin/env python3
+# imports
 import curses, locale, sys, os
-from json import loads as Decode
+from json import loads as decodeJson
 
 version = sys.argv[1]
 locale.setlocale(locale.LC_ALL, '')
@@ -14,12 +15,12 @@ curses.start_color()
 (height, width) = docs.getmaxyx()
 docs.keypad(1)
 
-#Colors
-curses.init_pair(1, curses.COLOR_GREEN, curses.COLOR_BLACK) #body
-curses.init_pair(2, curses.COLOR_WHITE, curses.COLOR_RED) #unimplemented
-curses.init_pair(3, curses.COLOR_CYAN, curses.COLOR_BLACK) #section
-curses.init_pair(4, curses.COLOR_YELLOW, curses.COLOR_BLACK) #key
-curses.init_pair(5, curses.COLOR_BLUE, curses.COLOR_BLACK) #search
+# Colors
+curses.init_pair(1, curses.COLOR_GREEN, curses.COLOR_BLACK)  # body
+curses.init_pair(2, curses.COLOR_WHITE, curses.COLOR_RED)  # unimplemented
+curses.init_pair(3, curses.COLOR_CYAN, curses.COLOR_BLACK)  # section
+curses.init_pair(4, curses.COLOR_YELLOW, curses.COLOR_BLACK)  # key
+curses.init_pair(5, curses.COLOR_BLUE, curses.COLOR_BLACK)  # search
 
 # Headings (Alphabetized)
 body_style = curses.color_pair(1)
@@ -42,7 +43,7 @@ key = ['q:exit', 'h:home', 's:search', 'S:search including descriptions']
 
 
 # Drawing
-def draw(bodylinelist = home, subsection = ['home'], searchprompt = 'Search documentation: '):
+def draw(bodylinelist=home, subsection=['home'], searchprompt='Search documentation: '):
     # defined per instance draw vars
     bodyshift = 0
     searching = False
@@ -125,11 +126,12 @@ class Search:
             allfiles.append(f.path)
         self.term = sterm
         self.files = allfiles
+
     def find(self, desc=False):
         self.results = []
         for efile in self.files:
             f = open(efile, 'r')
-            decoded = Decode(f.read())
+            decoded = decodeJson(f.read())
             if self.term.lower().replace(' ','') in decoded["tags"]:
                 self.results.append(SearchResult(decoded["name"], decoded["desc"], not decoded["implemented"]))
                 self.files[self.files.index(efile)] = None
@@ -142,6 +144,7 @@ class Search:
                     self.files[self.files.index(efile)] = None
             f.close()
         return self.results
+
 
 def drawSearch(search_term, descriptive = False, searchprompt = 'Search documentation: '):
     # defined per instance draw/search vars
@@ -246,6 +249,7 @@ def drawSearch(search_term, descriptive = False, searchprompt = 'Search document
                 break
     finally:
         curses.endwin()
+
 
 def drawSelect(result, searchprompt = 'Search documentation: '):
     body = [result.name]

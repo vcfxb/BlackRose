@@ -19,7 +19,7 @@ do
     '-v' | '--version') printf "[ BlackRose scripting language ]\nVersion: $VERSION \n";;
     '-V' | '--version-number') printf "$VERSION\n";;
     '-i' | '--interactive') $_base/target/release/blackrose ;;
-    '-d' | '--documentation' | 'docs') python3.5 $_base/docs/docs.py $VERSION ;;
+    '-d' | '--documentation' | 'docs') $_base/docs/docs.py $VERSION ;;
     '-u' | '--update' | 'update')
       cd $(dirname $_base)
       rm -rfv $_base

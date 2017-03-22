@@ -4,7 +4,7 @@ blackrose:
 	chmod +x bin/blackrose
 
 path:
-	sh lib/path.sh
+	printf "\n\nAdd BlackRose's folder to your PATH!\n\n"
 
 rust:
 	rustc --version
