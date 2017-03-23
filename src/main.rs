@@ -1,5 +1,6 @@
 extern crate blackrose;
 use blackrose::blackroseerrors as errors;
+use blackrose::preproc;
 use std::env;
 use std::fs::File;
 use std::io::{self, Read, Write};
@@ -8,14 +9,14 @@ fn main(){
     if args.len() > 2 {
         let arglenstring = (args.len()-1).to_string();
         let error_info = "Expected 1 argument, received ".to_string()+&arglenstring+" arguments.";
-        errors::execute(errors::Error{error_type: "ArgumentError", linenum: 0, filename:"command", loc: 0, line: &args.join(" "), info: &error_info });
+        errors::execute(errors::Error{error_type: "ArgumentError", line_num: 0, filename:"command", loc: 0, line: &args.join(" "), info: &error_info });
     } else if args.len() == 2 {
         let mut file = match File::open(&args[1]) {
             Ok(file) => file,
             Err(e) => {
                 let error_info_orig = &args[1];
                 let error_info = error_info_orig.to_string() + " could not be opened as a valid file!";
-                errors::execute(errors::Error{error_type: "ArgumentError", linenum: 0, filename:&args[1], loc: 0, line: &args.join(" "), info: error_info.as_str()});
+                errors::execute(errors::Error{error_type: "ArgumentError", line_num: 0, filename:&args[1], loc: 0, line: &args.join(" "), info: error_info.as_str()});
                 panic!(e);
             },
         };
@@ -25,7 +26,7 @@ fn main(){
             Err(e) => {
                 let error_info_orig = &args[1];
                 let error_info = error_info_orig.to_string() + " could not be read as a valid file!";
-                errors::execute(errors::Error{error_type: "ArgumentError", linenum: 0, filename:&args[1], loc: 0, line: &args.join(" "), info: error_info.as_str()});
+                errors::execute(errors::Error{error_type: "ArgumentError", line_num: 0, filename:&args[1], loc: 0, line: &args.join(" "), info: error_info.as_str()});
                 panic!(e);
             },
         };
@@ -36,11 +37,14 @@ fn main(){
     }
 }
 
-fn run_file(s :String, filename :&str) {
-    println!("{}", s);
+fn run_file(s: String, filename: &str) {
+    let p = preproc::preprocessor(&s);
+    for i in p {
+        println!("{}: {}", i.line_num, i.line);
+    }
 }
 
-fn run_prompt(inlist :&[&str]) {
+fn run_prompt(inlist: &[&str]) {
     let mut current_line :usize = 1;
     loop {
         print!("{}:{} > ", inlist.join(":"), current_line);
@@ -48,7 +52,7 @@ fn run_prompt(inlist :&[&str]) {
             Ok(a) => a,
             Err(e) => {
                 let error_info = "Could not write to standard output! (Fatal)";
-                errors::execute(errors::Error{error_type: "WriteOutError", linenum: current_line, filename:" ", loc: 0, line:"<interactive prompt>", info: error_info});
+                errors::execute(errors::Error{error_type: "WriteOutError", line_num: current_line, filename:" ", loc: 0, line:"<interactive prompt>", info: error_info});
                 panic!(e);
             },
         };
@@ -56,20 +60,21 @@ fn run_prompt(inlist :&[&str]) {
         match io::stdin().read_line(&mut buffer) {
             Ok(a) => a,
             Err(e) => {
-                errors::execute(errors::Error{error_type: "InvalidCharacterError", linenum: current_line, filename:"", loc: 0, line: &buffer.as_str(), info: (buffer.as_str().to_string()+ " contained invalid charcters!").as_str()});
+                errors::execute(errors::Error{error_type: "InvalidCharacterError", line_num: current_line, filename:"", loc: 0, line: &buffer.as_str(), info: (buffer.as_str().to_string()+ " contained invalid charcters!").as_str()});
                 panic!(e);
             },
         };
-        println!("{}", buffer);
+        let p = preproc::interactive_preprocessor(&buffer, current_line);
+        println!("{}: {}", p.line_num, p.line);
         match io::stdout().flush() {
             Ok(a) => a,
             Err(e) => {
                 let error_info = "Could not write to standard output! (Fatal)";
-                errors::execute(errors::Error{error_type: "WriteOutError", linenum: current_line, filename:" ", loc: 0, line: buffer.as_str(), info: error_info});
+                errors::execute(errors::Error{error_type: "WriteOutError", line_num: current_line, filename:" ", loc: 0, line: buffer.as_str(), info: error_info});
                 panic!(e);
             },
         };
-        current_line = current_line + 1;
+        current_line += 1;
     }
 }
 

@@ -1,3 +1,37 @@
+pub fn preprocessor<'c>(file_contents: &'c String) -> Vec<Line<'c>> {
+    let mut working_lines: Vec<Line> = vec![];
+    let mut final_lines: Vec<Line> = vec![];
+    let line_iter = file_contents.lines();
+    for (line_n, line_content) in  line_iter.enumerate() {
+        working_lines.push(Line{line: line_content, line_num: line_n})
+    }
+    let mut mline_comment = false;              // MultiLine comments
+    for numbered_line in working_lines {
+        if mline_comment {
+            if numbered_line.1.contains("###") {
+
+            }
+        } else {
+            if numbered_line.1.contains("###") {
+
+            } else {
+                
+            }
+        }
+    }
+    return final_lines;
+}
+
+pub fn interactive_preprocessor(buffered_line: &str, inline_num: usize) -> Line{
+    return Line{ line: buffered_line, line_num: inline_num };
+}
+
+pub struct Line<'l> {
+    pub line_num: usize,
+    pub line: &'l str,
+}
+
+
 // old Python file
 // def preprocessor(stringlist):
 //     # remove comments
