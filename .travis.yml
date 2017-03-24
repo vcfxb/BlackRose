@@ -9,4 +9,4 @@ install: true
 script:
   - make
   - ./bin/blackrose -v
-  - ./target/release/blackrose BlackRoseExamples/HelloWorld.rose
+  - ./target/release/blackrose -o BlackRoseExamples/HelloWorld.radon BlackRoseExamples/HelloWorld.rose
