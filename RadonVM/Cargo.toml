@@ -1,5 +1,6 @@
 [package]
 
-name = "blackrose"
-version = "0.1.0"
+name = "radon"
+version = "1"
 authors = [ "Anthony 'Antonia' Calia-Bogan <acaliabogan@gmail.com>" ]
+publish = false

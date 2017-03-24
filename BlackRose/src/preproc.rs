@@ -8,14 +8,14 @@ pub fn preprocessor<'c>(file_contents: &'c String) -> Vec<Line<'c>> {
     let mut mline_comment = false;              // MultiLine comments
     for numbered_line in working_lines {
         if mline_comment {
-            if numbered_line.1.contains("###") {
+            if numbered_line.line.contains("###") {
 
             }
         } else {
-            if numbered_line.1.contains("###") {
+            if numbered_line.line.contains("###") {
 
             } else {
-                
+                final_lines.push(numbered_line);
             }
         }
     }
@@ -31,6 +31,12 @@ pub struct Line<'l> {
     pub line: &'l str,
 }
 
+fn find_in_vec<T>(given_vec: &Vec, item: T, rep: usize) {
+    let index: usize = 0;
+    loop {
+
+    }
+}
 
 // old Python file
 // def preprocessor(stringlist):
