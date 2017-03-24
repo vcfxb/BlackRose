@@ -47,7 +47,7 @@ pub fn execute(err: Error) {
         let t: &str = &templine;
         finalvec.push(t.to_string());
     }
-    if err.line_num == 0 {
+    if err.loc == 0 {
         let mut templine = "  ".to_string();
         templine = templine + ("-".repeat(err.line.len())).as_str()+"\n";
         finalvec.push(templine)
