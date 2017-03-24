@@ -3,17 +3,17 @@ pub fn preprocessor<'c>(file_contents: &'c String) -> Vec<Line<'c>> {
     let mut final_lines: Vec<Line> = vec![];
     let line_iter = file_contents.lines();
     for (line_n, line_content) in  line_iter.enumerate() {
-        working_lines.push(Line{line: line_content, line_num: line_n})
+        working_lines.push(Line{line: line_content, line_num: line_n+1})
     }
     let mut mline_comment = false;              // MultiLine comments
     for numbered_line in working_lines {
         if mline_comment {
             if numbered_line.line.contains("###") {
-
+                // Find index of comment str
             }
         } else {
             if numbered_line.line.contains("###") {
-
+                // See above
             } else {
                 final_lines.push(numbered_line);
             }
@@ -31,12 +31,6 @@ pub struct Line<'l> {
     pub line: &'l str,
 }
 
-fn find_in_vec<T>(given_vec: &Vec, item: T, rep: usize) {
-    let index: usize = 0;
-    loop {
-
-    }
-}
 
 // old Python file
 // def preprocessor(stringlist):
