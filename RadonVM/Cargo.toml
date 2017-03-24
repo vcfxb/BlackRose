@@ -1,6 +1,6 @@
 [package]
 
 name = "radon"
-version = "1"
+version = "1.0.0"
 authors = [ "Anthony 'Antonia' Calia-Bogan <acaliabogan@gmail.com>" ]
 publish = false

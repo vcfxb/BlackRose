@@ -2,13 +2,11 @@ all: rust blackrose radon path
 
 blackrose:
 	chmod +x bin/blackrose
-	cd BlackRose
-	cargo build --release
+	make -C BlackRose
 
 radon:
 	chmod +x bin/radon
-	cd RadonVM
-	cargo build --release
+	make -C RadonVM
 
 path:
 	printf "\n\nAdd BlackRose's bin folder to your PATH!\n\n"
@@ -16,3 +14,5 @@ path:
 rust:
 	cargo --version
 
+
+core: radon blackrose

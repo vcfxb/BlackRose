@@ -21,7 +21,7 @@ do
         $0) ;;
         '-v' | '--version') printf "[ Black Rose programming language ]\nVersion: $VERSION \n" && exit 0;;
         '-V' | '--version-number') printf "$VERSION\n" && exit 0;;
-        '-i' | '--interactive') ${_base}/target/release/blackrose ;;
+        '-i' | '--interactive') ${_base}/BlackRose/target/release/blackrose ;;
         '-d' | '--documentation' | 'docs') ${_base}/docs/docs.py ${VERSION} ;;
         '-o' | '--output') _output=0 ;;
         '-u' | '--update' | 'update')
@@ -43,7 +43,8 @@ do
         '-h' | '--help' | '-?' | '--usage') printf """
 BlackRose
 usage:
-  blackrose [args] [file.rose]
+    blackrose [args] [file.rose]
+    (file.rose must be last)
 
 Arguments:
     -v, --version                        : Prints version info and exits
@@ -57,9 +58,9 @@ Arguments:
     \n""" && exit 0;;
         *)  if [ -f "$arg" ];
             then
-                if [ ${_outputf} -ne "" ]; then
+                if [ "${_outputf}" != "" ]; then
                     touch ${_outputf}
-                    ${_base}/target/release/blackrose ${arg} ${_outputf}
+                    ${_base}/BlackRose/target/release/blackrose ${arg} ${_outputf}
                 else
                     printf "An output file must be specified!" && exit 1
                 fi

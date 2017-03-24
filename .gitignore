@@ -1,3 +1,6 @@
 \BlackRose/target/
 \.idea/
 \RadonVM/target/
+BlackRoseExamples/*.radon
+/BlackRose/blackrose.iml
+/RadonVM/radon.iml
