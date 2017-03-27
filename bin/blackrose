@@ -4,8 +4,9 @@ _base="$(dirname $(dirname $_script))"
 
 VERSION=$(cat ${_base}/VERSION)
 
-_output=1
-_outputf=""
+_output=0
+_outputf=0
+_output_file=0
 
 if [ "$#" -ne 0 ];
 then
@@ -17,13 +18,13 @@ fi
 
 for arg in $@
 do
-    case $arg in
+    case ${arg} in
         $0) ;;
         '-v' | '--version') printf "[ Black Rose programming language ]\nVersion: $VERSION \n" && exit 0;;
         '-V' | '--version-number') printf "$VERSION\n" && exit 0;;
         '-i' | '--interactive') ${_base}/BlackRose/target/release/blackrose ;;
         '-d' | '--documentation' | 'docs') ${_base}/docs/docs.py ${VERSION} ;;
-        '-o' | '--output') _output=0 ;;
+        '-o' | '--output') _output=1 ;;
         '-u' | '--update' | 'update')
             cd $(dirname ${_base})
             rm -rfv ${_base}
@@ -44,7 +45,6 @@ do
 BlackRose
 usage:
     blackrose [args] [file.rose]
-    (file.rose must be last)
 
 Arguments:
     -v, --version                        : Prints version info and exits
@@ -53,24 +53,36 @@ Arguments:
     -i, --interactive                    : Run interactively in the terminal
     -d, --documentation, docs            : Opens documentation interface
     -u, --update, update                 : Update Black Rose to stable branch and exit
-      --update-master                  : update Black Rose to master (maybe unstable) and exit
+        --update-master                  : update Black Rose to master (maybe unstable) and exit
     -o, --output <filename.radon>        : compiles file.rose to file.radon bytecode and exits.
     \n""" && exit 0;;
-        *)  if [ -f "$arg" ];
-            then
-                if [ "${_outputf}" != "" ]; then
-                    touch ${_outputf}
-                    ${_base}/BlackRose/target/release/blackrose ${arg} ${_outputf}
+        *)
+            if [ ${_output} == 1 ]; then
+                if [ ${_output_file} == 1 ];
+                then
+                    mv ${_outputf} ${arg}
+                    _output=0
                 else
-                    printf "An output file must be specified!" && exit 1
+                    touch ${arg}
+                    _outputf=${arg}
+                    _output_file=1
+                    _output=0
                 fi
             else
-                if [ ${_output} == 0 ]; then
-                    _outputf="$arg"
-                    _output=1
+                if [ -e "$arg" ];
+                then
+                    if [ ${_output_file} == 1 ];
+                    then
+                        :
+                    else
+                        _outputf=${arg}.radon
+                        touch $_outputf
+                        _output_file=1
+                    fi
+                    ${_base}/BlackRose/target/release/blackrose ${arg} ${_outputf}
                 else
-                    printf "$arg is not a recognized argument.\n" && exit 1
+                    printf "$arg is not a valid argument! \n"
                 fi
-            fi ;;
+            fi;;
     esac
 done
