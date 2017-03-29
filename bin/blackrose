@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 _script="$(dirname "$0")"
-_base="$(dirname $(dirname $_script))"
+_base="$(dirname ${_script})"
 
 VERSION=$(cat ${_base}/VERSION)
 

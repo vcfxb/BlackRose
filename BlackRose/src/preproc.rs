@@ -2,13 +2,15 @@ pub fn preprocessor<'c>(file_contents: &'c String) -> Vec<Line> {
     let mut working_lines: Vec<Line> = vec![];
     let mut final_lines: Vec<Line> = vec![];
     let line_iter = file_contents.lines();
-    for (line_n, line_content) in  line_iter.enumerate() {
-        working_lines.push(Line{line: line_content.to_string().into_bytes(), line_num: line_n+1})
+    let mut line_n = 1;
+    for line_content in line_iter {
+        working_lines.push(Line{line: line_content.to_string().into_bytes(), line_num: line_n});
+        line_n += 1;
     }
     let mut mline_comment = false;              // MultiLine comments
     for numbered_line in working_lines {
         if numbered_line.line.contains(&0x23) {
-            final_lines.push(Line{ line_num: numbered_line.line_num, line: until_comment(numbered_line.line, 0x23 ) });
+            final_lines.push(Line{ line_num: numbered_line.line_num, line: until_comment(numbered_line.line, 0x23) });
         } else {
             final_lines.push(numbered_line);
         }
