@@ -1,6 +1,0 @@
-version: 1.0.{build}
-build:
-  verbosity: minimal
-artifacts:
-- path: make
-  name: Make
