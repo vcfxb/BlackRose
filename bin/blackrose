@@ -7,7 +7,7 @@ VERSION=$(cat ${_base}/VERSION)
 _output=0
 _outputf=0
 _output_file=0
-_optimal=0
+_optimize=0
 
 if [ "$#" -ne 0 ];
 then
