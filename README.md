@@ -30,4 +30,4 @@ Don't forget to add BlackRose/bin to your PATH.
 If you would like to contribute, please fork, make changes, and make a pull request.
 
 #### Issues
-If you have a problem with black rose, write an issue.
+If you have a problem with Black Rose or Radon, write an issue.
