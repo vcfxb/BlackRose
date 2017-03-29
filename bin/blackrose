@@ -79,7 +79,7 @@ Arguments:
                         :
                     else
                         _outputf=${arg}.radon
-                        touch $_outputf
+                        touch ${_outputf}
                         _output_file=1
                     fi
                     ${_base}/BlackRose/target/release/blackrose ${arg} ${_outputf} ${_optimize}
