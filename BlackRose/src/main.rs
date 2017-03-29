@@ -39,7 +39,8 @@ fn main(){
                 panic!(e);
             },
         };
-        run_file(contents, out_file, &args[1], &args[3]);
+        let optimized: u8 = args[3].parse().unwrap();
+        run_file(contents, out_file, &args[1], optimized);
     } else if args.len() == 1 {
         let prompt = vec!["radon"];
         run_prompt(&prompt);
