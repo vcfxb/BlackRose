@@ -12,4 +12,5 @@ install: true
 script:
   - make
   - ./bin/blackrose -v
-  - ./bin/blackrose -o BlackRoseExamples/HelloWorld.radon BlackRoseExamples/HelloWorld.rose
+  - ./bin/blackrose -o BlackRoseExamples/HelloWorld.debug.radon BlackRoseExamples/HelloWorld.rose
+  - ./bin/blackrose -O -o BlackRoseExamples/HelloWorld.debug.radon BlackRoseExamples/HelloWorld.rose

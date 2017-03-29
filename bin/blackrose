@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-_script="$(readlink -f ${BASH_SOURCE[0]})"
+_script="$(dirname "$0")"
 _base="$(dirname $(dirname $_script))"
 
 VERSION=$(cat ${_base}/VERSION)
@@ -7,6 +7,7 @@ VERSION=$(cat ${_base}/VERSION)
 _output=0
 _outputf=0
 _output_file=0
+_optimal=0
 
 if [ "$#" -ne 0 ];
 then
@@ -25,6 +26,7 @@ do
         '-i' | '--interactive') ${_base}/BlackRose/target/release/blackrose ;;
         '-d' | '--documentation' | 'docs') ${_base}/docs/docs.py ${VERSION} ;;
         '-o' | '--output') _output=1 ;;
+        '-O' | '--optimize') _optimize=1;;
         '-u' | '--update' | 'update')
             cd $(dirname ${_base})
             rm -rfv ${_base}
@@ -54,7 +56,8 @@ Arguments:
     -d, --documentation, docs            : Opens documentation interface
     -u, --update, update                 : Update Black Rose to stable branch and exit
         --update-master                  : update Black Rose to master (maybe unstable) and exit
-    -o, --output <filename.radon>        : compiles file.rose to file.radon bytecode and exits.
+    -o, --output <filename.radon>        : compiles file.rose to file.radon bytecode and exits. (debug by defualt)
+    -O, --optimize                       : optimizes output radon bytecode
     \n""" && exit 0;;
         *)
             if [ ${_output} == 1 ]; then
@@ -79,7 +82,7 @@ Arguments:
                         touch $_outputf
                         _output_file=1
                     fi
-                    ${_base}/BlackRose/target/release/blackrose ${arg} ${_outputf}
+                    ${_base}/BlackRose/target/release/blackrose ${arg} ${_outputf} ${_optimize}
                 else
                     printf "$arg is not a valid argument! \n"
                 fi

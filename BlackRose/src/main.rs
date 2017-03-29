@@ -6,11 +6,11 @@ use std::fs::File;
 use std::io::{self, Read, Write};
 fn main(){
     let args: Vec<String> = env::args().collect();
-    if args.len() > 3 {
+    if args.len() > 4 {
         let arglenstring = (args.len()-1).to_string();
-        let error_info = "Expected 0 or 2 arguments, received ".to_string()+&arglenstring+" arguments.";
+        let error_info = "Expected 0 or 3 arguments, received ".to_string()+&arglenstring+" arguments.";
         errors::execute(errors::Error{error_type: "ArgumentError", line_num: 0, filename:"command", loc: 0, line: &args.join(" "), info: &error_info });
-    } else if args.len() == 3 {
+    } else if args.len() == 4 {
         let mut file = match File::open(&args[1]) {
             Ok(file) => file,
             Err(e) => {
@@ -39,21 +39,25 @@ fn main(){
                 panic!(e);
             },
         };
-        run_file(contents, out_file, &args[1]);
+        run_file(contents, out_file, &args[1], &args[3]);
     } else if args.len() == 1 {
         let prompt = vec!["radon"];
         run_prompt(&prompt);
     } else {
         let arglenstring = (args.len()-1).to_string();
-        let error_info = "Expected 0 or 2 arguments, received ".to_string()+&arglenstring+" arguments.";
+        let error_info = "Expected 0 or 3 arguments, received ".to_string()+&arglenstring+" arguments.";
         errors::execute(errors::Error{error_type: "ArgumentError", line_num: 0, filename:"command", loc: 0, line: &args.join(" "), info: &error_info });
     }
 }
 
-fn run_file(s: String, mut output: File, file_name: &str) {
+fn run_file(s: String, mut output: File, file_name: &str, optimize: u8) {
     let p = preproc::preprocessor(&s);
     for i in p {
-        println!("{}: {}", i.line_num, i.line);
+        print!("{}: ", i.line_num);
+        for u in i.line {
+            print!("{:#x} ", u);
+        }
+        println!();
     }
 }
 
@@ -78,7 +82,7 @@ fn run_prompt(inlist: &[&str]) {
             },
         };
         let p = preproc::interactive_preprocessor(&buffer, current_line);
-        println!("{}: {}", p.line_num, p.line);
+        println!("{}: {:?}", p.line_num, p.line);
         match io::stdout().flush() {
             Ok(a) => a,
             Err(e) => {
