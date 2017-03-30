@@ -1,19 +1,16 @@
 
 language:
-  - python
-python:
-  - "3.5"
+  - rust
+rust:
+  - 1.16.0
 os:
   - linux
   - osx
 
-install:
-  - curl https://sh.rustup.rs -sSf | sh -s -- -y --default-toolchain $RUST_VERSION
-  - export PATH="$HOME/.cargo/bin:$PATH"
-  - rustc -V
+install: true
 
 script:
-  - python3.5 BUILD.py
+  -  python BUILD.py
   - ./bin/blackrose -v
   - ./bin/blackrose -o BlackRoseExamples/HelloWorld.debug.radon BlackRoseExamples/HelloWorld.rose
   - ./bin/blackrose -O -o BlackRoseExamples/HelloWorld.debug.radon BlackRoseExamples/HelloWorld.rose
