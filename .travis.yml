@@ -5,7 +5,7 @@ language:
 rust:
   - 1.16.0
 python:
-  - 3.5
+  - "3.5"
 os:
   - linux
   - osx
