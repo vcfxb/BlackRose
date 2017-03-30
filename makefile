@@ -3,9 +3,9 @@ all: main
 main:
 	python BUILD.py
 
-travis: blackrose radon
+travis: theblackrose radon
 
-blackrose:
+theblackrose:
 	chmod +x bin/blackrose
 	make -C BlackRose
 
