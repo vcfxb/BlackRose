@@ -1,5 +1,5 @@
 # Black Rose scripting Language and Radon VM
-## **Not anywhere near ready for use.**
+## Not anywhere near ready for use.
 #### Status
 Branch | Travis CI
 ------ | ---------
@@ -10,10 +10,10 @@ Stable | [![Build Status](https://travis-ci.org/Alfriadox/BlackRose.svg?branch=s
 
 ##### System Requirements
 * Linux
-    * Python 3.5 or higher
+    * Python 3.5 or higher (for installation process and interactive terminal documentation)
     * Rust/Cargo 1.16.0 or higher
 * Mac
-    * Python 3.5 or higher
+    * Python 3.5 or higher (for installation process and interactive terminal documentation)
     * Rust/Cargo 1.16.0 or higher
 
 ##### Stable

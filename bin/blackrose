@@ -24,7 +24,7 @@ do
         '-v' | '--version') printf "[ Black Rose programming language ]\nVersion: $VERSION \n" && exit 0;;
         '-V' | '--version-number') printf "$VERSION\n" && exit 0;;
         '-i' | '--interactive') ${_base}/BlackRose/target/release/blackrose ;;
-        '-d' | '--documentation' | 'docs') ${_base}/docs/docs.py ${VERSION} ;;
+        '-d' | '--documentation' | 'docs') python3.5 ${_base}/docs/docs.py ${VERSION} ;;
         '-o' | '--output') _output=1 ;;
         '-O' | '--optimize') _optimize=1;;
         '-u' | '--update' | 'update')
