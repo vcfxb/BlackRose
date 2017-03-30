@@ -13,7 +13,7 @@ os:
 install: true
 
 script:
-  - python BUILD.py
+  - python3.5 BUILD.py
   - ./bin/blackrose -v
   - ./bin/blackrose -o BlackRoseExamples/HelloWorld.debug.radon BlackRoseExamples/HelloWorld.rose
   - ./bin/blackrose -O -o BlackRoseExamples/HelloWorld.debug.radon BlackRoseExamples/HelloWorld.rose
