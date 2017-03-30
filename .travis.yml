@@ -1,16 +1,16 @@
 
 language:
-  - rust
   - python
-rust:
-  - 1.16.0
 python:
   - "3.5"
 os:
   - linux
   - osx
 
-install: true
+install:
+  - curl https://sh.rustup.rs -sSf | sh -s -- -y --default-toolchain $RUST_VERSION
+  - export PATH="$HOME/.cargo/bin:$PATH"
+  - rustc -V
 
 script:
   - python3.5 BUILD.py
