@@ -1,4 +1,4 @@
-all: rust blackrose radon path
+all: rust core path
 
 blackrose:
 	chmod +x bin/blackrose
@@ -15,4 +15,4 @@ rust:
 	cargo --version
 
 
-core: radon blackrose
+core: blackrose radon
