@@ -3,15 +3,21 @@ language:
   - rust
 rust:
   - 1.16.0
+  - beta
+  - nightly
+
 os:
   - linux
   - osx
 
 install:
-  - chmod +x BUILD.py
+  - make travis
 
 script:
-  -  ./BUILD.py
   - ./bin/blackrose -v
   - ./bin/blackrose -o BlackRoseExamples/HelloWorld.debug.radon BlackRoseExamples/HelloWorld.rose
   - ./bin/blackrose -O -o BlackRoseExamples/HelloWorld.debug.radon BlackRoseExamples/HelloWorld.rose
+
+matrix:
+  allow_failures:
+    - rust: nightly
