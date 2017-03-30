@@ -11,7 +11,8 @@ os:
   - osx
 
 install:
-  - make travis
+  - make blackrose
+  - make radon
 
 script:
   - ./bin/blackrose -v
