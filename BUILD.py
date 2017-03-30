@@ -1,6 +1,6 @@
 #!/usr/bin/env python3.5
 import subprocess, sys, os
-run = subprocess.call
+run = subprocess.run
 output_info = subprocess.CompletedProcess
 PIPE = subprocess.PIPE
 dir_path = os.path.dirname(os.path.realpath(__file__))

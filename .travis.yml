@@ -7,10 +7,11 @@ os:
   - linux
   - osx
 
-install: true
+install:
+  - chmod +x BUILD.py
 
 script:
-  -  python BUILD.py
+  -  ./BUILD.py
   - ./bin/blackrose -v
   - ./bin/blackrose -o BlackRoseExamples/HelloWorld.debug.radon BlackRoseExamples/HelloWorld.rose
   - ./bin/blackrose -O -o BlackRoseExamples/HelloWorld.debug.radon BlackRoseExamples/HelloWorld.rose
