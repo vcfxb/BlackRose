@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-_script="$(readlink -f ${BASH_SOURCE[0]})"
+_script="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 _base="$(dirname $(dirname ${_script}))"
 
 VERSION=$(cat ${_base}/VERSION)

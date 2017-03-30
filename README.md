@@ -8,12 +8,20 @@ Stable | [![Build Status](https://travis-ci.org/Alfriadox/BlackRose.svg?branch=s
 
 #### Installing
 
+##### System Requirements
+* Linux
+    * Python 3.5 or higher
+    * Rust/Cargo 1.16.0 or higher
+* Mac
+    * Python 3.5 or higher
+    * Rust/Cargo 1.16.0 or higher
+
 ##### Stable
 Move into whichever directory you would like to install Black Rose and Radon into, and then run
 ```
 git clone -b stable --single-branch https://github.com/Alfriadox/BlackRose.git
 cd BlackRose
-make
+python3.5 BUILD.py
 ```
 Don't forget to add BlackRose/bin to your PATH.
 
@@ -22,7 +30,7 @@ Move into whichever directory you would like to install Black Rose and Radon int
 ```
 git clone https://github.com/Alfriadox/BlackRose.git
 cd BlackRose
-make
+python3.5 BUILD.py
 ```
 Don't forget to add BlackRose/bin to your PATH.
 

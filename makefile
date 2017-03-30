@@ -1,4 +1,7 @@
-all: rust core path
+all: main
+
+main:
+	python BUILD.py
 
 blackrose:
 	chmod +x bin/blackrose
@@ -7,12 +10,6 @@ blackrose:
 radon:
 	chmod +x bin/radon
 	make -C RadonVM
-
-path:
-	printf "\n\nAdd BlackRose's bin folder to your PATH!\n\n"
-
-rust:
-	cargo --version
 
 
 core: blackrose radon

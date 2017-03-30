@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-_script="$(dirname "$0")"
+_script="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 _base="$(dirname ${_script})"
 
 VERSION=$(cat ${_base}/VERSION)
