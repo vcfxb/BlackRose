@@ -3,10 +3,22 @@ language:
   - rust
 rust:
   - 1.16.0
+  - beta
+  - nightly
 
-install: true
+os:
+  - linux
+  - osx
+
+install:
+  - make theblackrose
+  - make radon
 
 script:
-  - make
   - ./bin/blackrose -v
-  - ./target/release/blackrose BlackRoseExamples/HelloWorld.rose
+  - ./bin/blackrose -o BlackRoseExamples/HelloWorld.debug.radon BlackRoseExamples/HelloWorld.rose
+  - ./bin/blackrose -O -o BlackRoseExamples/HelloWorld.debug.radon BlackRoseExamples/HelloWorld.rose
+
+matrix:
+  allow_failures:
+    - rust: nightly

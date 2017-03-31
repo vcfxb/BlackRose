@@ -10,7 +10,7 @@
   "desc":[
     "    WriteOutError",
     "This error is raised when the standard",
-    "output is inaccessable in interactive mode",
+    "output is inaccessible in interactive mode",
     "resulting in a crash.",
     ""
   ]

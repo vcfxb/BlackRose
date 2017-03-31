@@ -9,8 +9,8 @@
   "implemented":true,
   "desc":[
     "    ArgumentError",
-    "ArgumentError is raised when the",
-    "internal main.rs script is passed",
+    "ArgumentError is raised when an",
+    "internal  script is passed",
     "the wrong number of arguments.",
     ""
   ]

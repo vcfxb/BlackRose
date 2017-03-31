@@ -1,13 +1,14 @@
-all: blackrose rust rustFiles path
+all: main
 
-blackrose:
+main:
+	python BUILD.py
+
+travis: theblackrose radon
+
+theblackrose:
 	chmod +x bin/blackrose
+	make -C BlackRose
 
-path:
-	sh lib/path.sh
-
-rust:
-	rustc --version
-
-rustFiles:
-	cargo build --release
+radon:
+	chmod +x bin/radon
+	make -C RadonVM

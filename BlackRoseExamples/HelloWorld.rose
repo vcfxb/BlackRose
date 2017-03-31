@@ -1,2 +1,2 @@
 # Print "Hello World!" to the terminal
-print("Hello World!");
+println("Hello World!");
