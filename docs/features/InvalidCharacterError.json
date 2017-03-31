@@ -8,8 +8,8 @@
   ],
   "implemented":true,
   "desc":[
-    "   InvalidCharcterError",
-    "This error is raised when a non-UTF-8 charcter",
+    "   InvalidCharacterError",
+    "This error is raised when a non-UTF-8 character",
     "is passed into the input, resulting in a crash.",
     ""
   ]

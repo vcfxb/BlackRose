@@ -7,7 +7,10 @@
   ],
   "implemented":false,
   "desc":[
-    "Type will be expressed as tuples.",
+    "   Types",
+    "Type will be expressed as tuples. Typing will",
+    "be strong and both explicitly and implicitly",
+    "written.",
     ""
   ]
 }

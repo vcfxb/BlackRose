@@ -16,7 +16,7 @@
     "",
     "  Each entry in the documentation is generated from a JSON file",
     "in Black Rose's docs/features directory. The JSON file includes",
-    "a name, a list of search tags, a Boolean value denoting",
+    "a name, a list of search tags, a boolean value denoting",
     "implementation, and a list of lines for the description.",
     ""
   ]
