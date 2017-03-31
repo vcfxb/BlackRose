@@ -1,0 +1,29 @@
+{
+  "name":"Comments",
+  "tags":[
+    "comments",
+    "singlelinecomments",
+    "multilinecomments",
+    "singlelinecomment",
+    "multilinecomment",
+    "comment",
+    ""
+  ],
+  "implemented":true,
+  "desc":[
+    "    # Comment",
+    "Single line comment.",
+    "All single line comments start with a #,",
+    "and end at the newline character.",
+    "",
+    "   ### Comment ###",
+    "Multiple Line Comment.",
+    "Multiline comments are started and ended with",
+    "the ### sequence, and are not nestable.",
+    "",
+    "Note: In interactive mode, there are only",
+    "single line comments. Multiline comments will",
+    "not work.",
+    ""
+  ]
+}

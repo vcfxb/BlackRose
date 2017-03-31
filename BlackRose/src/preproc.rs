@@ -83,9 +83,12 @@ pub fn preprocessor<'c>(file_contents: &'c String) -> Vec<Line> {
     return final_lines;
 }
 
-pub fn interactive_preprocessor(buffered_line: &str, inline_num: usize) -> Line{
-    // TODO: interactive check for comments
-    return Line{ line: buffered_line.to_string().into_bytes(), line_num: inline_num };
+pub fn interactive_preprocessor(buffered_line: &str, inline_num: usize) -> Line {
+    let mut l: Line = Line { line: buffered_line.to_string().into_bytes(), line_num: inline_num };
+    if l.line.contains(&0x23) {
+        l.line = until_comment(l.line, 0x23);
+    }
+    return l;
 }
 
 pub struct Line {
