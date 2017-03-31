@@ -82,8 +82,12 @@ fn run_prompt(inlist: &[&str]) {
                 panic!(e);
             },
         };
-        let p = preproc::interactive_preprocessor(&buffer, current_line);
-        println!("{}: {:?}", p.line_num, p.line);
+        let full_line = preproc::interactive_preprocessor(&buffer, current_line);
+        print!("{}: ", full_line.line_num);
+        for character in full_line.line {
+            print!("{:#x} ", character);
+        }
+        println!();
         match io::stdout().flush() {
             Ok(a) => a,
             Err(e) => {
