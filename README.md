@@ -1,4 +1,4 @@
-# Black Rose scripting Language and Radon VM
+# Black Rose programming Language and Radon VM
 ## Not anywhere near ready for use.
 #### Status
 Branch | Travis CI
