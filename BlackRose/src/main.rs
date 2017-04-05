@@ -1,6 +1,7 @@
 extern crate blackrose;
 use blackrose::blackroseerrors as errors;
 use blackrose::preproc;
+use blackrose::lexer;
 use std::env;
 use std::fs::File;
 use std::io::{self, Read, Write};
@@ -52,18 +53,21 @@ fn main(){
 }
 
 fn run_file(s: String, mut output: File, file_name: &str, optimize: u8) {
-    let p = preproc::preprocessor(&s);
-    for i in p {
-        print!("{}: ", i.line_num);
+    let p: Vec<preproc::UTF8Line> = preproc::preprocessor(&s);
+    let l: Vec<lexer::LexedLine> = lexer::lex_lines(p, );
+    for i in l {
+        print!("{}:Lexed:    ", i.line_num);
         for u in i.line {
-            print!("{:#x} ", u);
+            print!("{:?} ", u);
         }
         println!();
+        println!("{}:Original: {}", i.line_num ,i.original_line);
     }
 }
 
 fn run_prompt(inlist: &[&str]) {
     let mut current_line :usize = 1;
+    // Todo: Interactive Lexer
     loop {
         print!("{}:{} > ", inlist.join(":"), current_line);
         match io::stdout().flush(){
@@ -104,7 +108,7 @@ fn run_prompt(inlist: &[&str]) {
 //     while True:
 //         try:
 //             t = input(':'.join(prompt))
-//             print(lex(preproc([t])))
+//             print(lex_line(preproc([t])))
 //         except KeyboardInterrupt:
 //             print('\nexit')
 //             sys.exit(0)

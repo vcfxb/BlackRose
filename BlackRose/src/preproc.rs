@@ -16,7 +16,7 @@ pub fn preprocessor<'c>(file_contents: &'c String) -> Vec<UTF8Line> {
                         } else {
                             if part.is_empty() {
                             } else {
-                                working_lines.push(UTF8Line { line: part.to_string().into_bytes(), line_num: line_n });
+                                working_lines.push(UTF8Line { line: part.to_string().into_bytes(), line_num: line_n , original_line: line_content});
                             }
                             swap = true;
                         }
@@ -29,7 +29,7 @@ pub fn preprocessor<'c>(file_contents: &'c String) -> Vec<UTF8Line> {
                         } else {
                             if part.is_empty() {
                             } else {
-                                working_lines.push(UTF8Line { line: part.to_string().into_bytes(), line_num: line_n });
+                                working_lines.push(UTF8Line { line: part.to_string().into_bytes(), line_num: line_n,  original_line: line_content});
                             }
                             swap = true;
                         }
@@ -44,7 +44,7 @@ pub fn preprocessor<'c>(file_contents: &'c String) -> Vec<UTF8Line> {
                         } else {
                             if part.is_empty() {
                             } else {
-                                working_lines.push(UTF8Line { line: part.to_string().into_bytes(), line_num: line_n });
+                                working_lines.push(UTF8Line { line: part.to_string().into_bytes(), line_num: line_n, original_line: line_content});
                             }
                             swap = true;
                         }
@@ -57,7 +57,7 @@ pub fn preprocessor<'c>(file_contents: &'c String) -> Vec<UTF8Line> {
                         } else {
                             if part.is_empty() {
                             } else {
-                                working_lines.push(UTF8Line { line: part.to_string().into_bytes(), line_num: line_n });
+                                working_lines.push(UTF8Line { line: part.to_string().into_bytes(), line_num: line_n, original_line: line_content });
                             }
                             swap = true;
                         }
@@ -67,7 +67,7 @@ pub fn preprocessor<'c>(file_contents: &'c String) -> Vec<UTF8Line> {
             }
         } else {
             if mline_comment == false {
-                working_lines.push(UTF8Line { line: line_content.to_string().into_bytes(), line_num: line_n });
+                working_lines.push(UTF8Line { line: line_content.to_string().into_bytes(), line_num: line_n, original_line: line_content});
             }
         }
         line_n += 1;
@@ -75,7 +75,7 @@ pub fn preprocessor<'c>(file_contents: &'c String) -> Vec<UTF8Line> {
     // multi line comments done, now go to single line comments
     for numbered_line in working_lines {
         if numbered_line.line.contains(&0x23) {
-            final_lines.push(UTF8Line { line_num: numbered_line.line_num, line: until_comment(numbered_line.line, 0x23) });
+            final_lines.push(UTF8Line { line_num: numbered_line.line_num, line: until_comment(&numbered_line.line, 0x23), original_line: numbered_line.original_line});
         } else {
             final_lines.push(numbered_line);
         }
@@ -84,25 +84,26 @@ pub fn preprocessor<'c>(file_contents: &'c String) -> Vec<UTF8Line> {
 }
 
 pub fn interactive_preprocessor(buffered_line: &str, inline_num: usize) -> UTF8Line {
-    let mut l: UTF8Line = UTF8Line { line: buffered_line.to_string().into_bytes(), line_num: inline_num };
+    let mut l: UTF8Line = UTF8Line { line: buffered_line.to_string().into_bytes(), line_num: inline_num, original_line: buffered_line };
     if l.line.contains(&0x23) {
-        l.line = until_comment(l.line, 0x23);
+        l.line = until_comment(&l.line, 0x23);
     }
     return l;
 }
 
-pub struct UTF8Line {
+pub struct UTF8Line<'a> {
     pub line_num: usize,
     pub line: Vec<u8>,          // UTF8Line.line is a vector of bytes (utf-8 encodings)
+    pub original_line: &'a str,
 }
 
-fn until_comment(list: Vec<u8>, item: u8) -> Vec<u8> { // Only works if item is definitely in list
+fn until_comment(list: &Vec<u8>, item: u8) -> Vec<u8> { // Only works if item is definitely in list
     let mut fv :Vec<u8> = vec![];
     for i in list {
-        if i == item {
+        if *i == item {
             break;
         } else {
-            fv.push(i);
+            fv.push(*i);
         }
     }
     return fv;
