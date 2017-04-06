@@ -54,7 +54,7 @@ fn main(){
 
 fn run_file(s: String, mut output: File, file_name: &str, optimize: u8) {
     let p: Vec<preproc::UTF8Line> = preproc::preprocessor(&s);
-    let l: Vec<lexer::LexedLine> = lexer::lex_lines(p, );
+    let l: Vec<lexer::LexedLine> = lexer::lex_lines(p);
     for i in l {
         print!("{}:Lexed:    ", i.line_num);
         for u in i.line {
@@ -69,7 +69,7 @@ fn run_prompt(inlist: &[&str]) {
     let mut current_line :usize = 1;
     // Todo: Interactive Lexer
     loop {
-        print!("{}:{} > ", inlist.join(":"), current_line);
+        print!("{}:{} : ", inlist.join(":"), current_line);
         match io::stdout().flush(){
             Ok(a) => a,
             Err(e) => {
@@ -87,9 +87,10 @@ fn run_prompt(inlist: &[&str]) {
             },
         };
         let full_line = preproc::interactive_preprocessor(&buffer, current_line);
-        print!("{}: ", full_line.line_num);
-        for character in full_line.line {
-            print!("{:#x} ", character);
+        let lexed_line = lexer::LexedLine{ line_num: full_line.line_num, line: lexer::lex_line(full_line.line), original_line: full_line.original_line };
+        print!("{}:>>> ", lexed_line.line_num);
+        for word in lexed_line.line {
+            print!("{:?} ", word);
         }
         println!();
         match io::stdout().flush() {

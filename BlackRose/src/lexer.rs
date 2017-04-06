@@ -16,18 +16,23 @@ pub fn lex_line(cl: Vec<u8>) -> Vec<Vec<char>> {
     char_list.reverse();                       // make it so that char_list.pop() actually returns the first rather than the last
     loop {
         let mut work_list: Vec<char> = vec![];
-        let character = match char_list.pop() {     // stop at end of line
-            Some(n) => n,
-            None => break,
+        let character: char;
+        if let Some(n) = char_list.pop() {     //if let statement is easier/better than match statement
+            character = n;
+        }
+        else {
+            break;          // stop at end of line
         };
+        // go on to character matching
         if character == '\"' { // Past here is essentially a match statement, but with more power to it
             work_list.push(character);
-            loop {
+            let mut continue_loop = true;
+            while continue_loop == true {
                 match char_list.pop() {     // stop at end of line
                     Some(n) => {
                         if n == '\"' {
                             work_list.push(n);
-                            break;
+                            continue_loop = false;
                         } else {
                             work_list.push(n);
                         }
@@ -38,12 +43,13 @@ pub fn lex_line(cl: Vec<u8>) -> Vec<Vec<char>> {
         }
         else if character == '\'' { // Past here is essentially a match statement, but with more power to it
             work_list.push(character);
-            loop {
+            let mut continue_loop = true;
+            while continue_loop == true {
                 match char_list.pop() {     // stop at end of line
                     Some(n) => {
                         if n == '\'' {
                             work_list.push(n);
-                            break;
+                            continue_loop = false;
                         } else {
                             work_list.push(n);
                         }
@@ -55,7 +61,8 @@ pub fn lex_line(cl: Vec<u8>) -> Vec<Vec<char>> {
         else if character == ' ' {}
         else if character.is_numeric() {      //is_numeric hopefully doesnt let in letters
             work_list.push(character);
-            loop {
+            let mut continue_loop = true;
+            while continue_loop == true {
                 match char_list.pop() {     // stop at end of line
                     Some(n) => {
                         if n.is_numeric() {
@@ -64,7 +71,7 @@ pub fn lex_line(cl: Vec<u8>) -> Vec<Vec<char>> {
                             work_list.push(n);
                         } else {
                             char_list.push(n);     // if not one of the desired characters here, put it back
-                            break;
+                            continue_loop = false;
                         }
                     },
                     None => break,
@@ -73,14 +80,15 @@ pub fn lex_line(cl: Vec<u8>) -> Vec<Vec<char>> {
         }
         else if character.is_alphanumeric() {
             work_list.push(character);
-            loop {
+            let mut continue_loop = true;
+            while continue_loop == true {
                 match char_list.pop() {     // stop at end of line
                     Some(n) => {
-                        if n.is_alphanumeric() {
+                        if n.is_alphanumeric() && !(n.is_numeric()) {  // if n is an alphabetical character
                             work_list.push(n);
                         } else {
                             char_list.push(n);     // if not one of the desired characters here, put it back
-                            break;
+                            continue_loop = false;
                         }
                     },
                     None => break,
@@ -90,99 +98,98 @@ pub fn lex_line(cl: Vec<u8>) -> Vec<Vec<char>> {
         else if ['(', ')', '.', ';', '{', '}', ':', ','].contains(&character) {
             work_list.push(character);
         }
-            // Special characters
+        // Special characters
         else if character == '=' {
-            work_list.push(character);
+            work_list.push('=');
             match char_list.pop() {     // stop at end of line
                 Some(n) => {
                     if n == '=' {
                         work_list.push(n);
                     } else {
                         char_list.push(n);     // if not one of the desired characters here, put it back
-                        break;
                     }
                 },
                 None => break,
             };
         }
         else if character == '-' {
+            work_list.push('-');        // aka the character
             match char_list.pop() {     // stop at end of line
                 Some(n) => {
                     if ['=', '>', '-'].contains(&n) {
                         work_list.push(n);
                     } else {
                         char_list.push(n);     // if not one of the desired characters here, put it back
-                        break;
                     }
                 },
                 None => break,
             };
         }
         else if character == '+' {
-                match char_list.pop() {     // stop at end of line
-                    Some(n) => {
-                        if ['=', '+'].contains(&n) {
-                            work_list.push(n);
-                        } else {
-                            char_list.push(n);     // if not one of the desired characters here, put it back
-                            break;
-                        }
-                    },
-                    None => break,
-                };
-            }
-        else if character == '!' {
-                match char_list.pop() {     // stop at end of line
-                    Some(n) => {
-                        if n == '=' {
-                            work_list.push(n);
-                        } else {
-                            char_list.push(n);     // if not one of the desired characters here, put it back
-                            break;
-                        }
-                    },
-                    None => break,
-                };
+            work_list.push('+');
+            match char_list.pop() {     // stop at end of line
+                Some(n) => {
+                    if ['=', '+'].contains(&n) {
+                        work_list.push(n);
+                    } else {
+                        char_list.push(n);     // if not one of the desired characters here, put it back
+                    }
+                },
+                None => break,
+            };
         }
-        else if character == '<' {
+        else if character == '!' {
+            work_list.push('!');
             match char_list.pop() {     // stop at end of line
                 Some(n) => {
                     if n == '=' {
                         work_list.push(n);
                     } else {
                         char_list.push(n);     // if not one of the desired characters here, put it back
-                        break;
+                    }
+                },
+                None => break,
+            };
+        }
+        else if character == '<' {
+            work_list.push('<');
+            match char_list.pop() {     // stop at end of line
+                Some(n) => {
+                    if n == '=' {
+                        work_list.push(n);
+                    } else {
+                        char_list.push(n);     // if not one of the desired characters here, put it back
                     }
                 },
                 None => break,
             };
         }
         else if character == '>' {
-                match char_list.pop() {     // stop at end of line
-                    Some(n) => {
-                        if n == '=' {
-                            work_list.push(n);
-                        } else {
-                            char_list.push(n);     // if not one of the desired characters here, put it back
-                            break;
-                        }
-                    },
-                    None => break,
-                };
-            }
+            work_list.push('>');
+            match char_list.pop() {     // stop at end of line
+                Some(n) => {
+                    if n == '=' {
+                        work_list.push(n);
+                    } else {
+                        char_list.push(n);     // if not one of the desired characters here, put it back
+                    }
+                },
+                None => break,
+            };
+        }
         else if character == '*' {
-                match char_list.pop() {     // stop at end of line
-                    Some(n) => {
-                        if n == '=' {
-                            work_list.push(n);
-                        } else {
-                            char_list.push(n);     // if not one of the desired characters here, put it back
-                            break;
-                        }
-                    },
-                    None => break,
-                };
-            }
+            work_list.push('*');
+            match char_list.pop() {     // stop at end of line
+                Some(n) => {
+                    if n == '=' {
+                        work_list.push(n);
+                    } else {
+                        char_list.push(n);     // if not one of the desired characters here, put it back
+                    }
+                },
+                None => break,
+            };
+        }
         else {
             work_list.push(character);
         }
