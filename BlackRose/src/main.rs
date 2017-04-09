@@ -68,7 +68,6 @@ fn run_file(s: String, mut output: File, file_name: &str, optimize: u8) {
 
 fn run_prompt(inlist: &[&str]) {
     let mut current_line :usize = 1;
-    // Todo: Interactive Lexer
     loop {
         print!("{}:{} : ", inlist.join(":"), current_line);
         match io::stdout().flush(){
