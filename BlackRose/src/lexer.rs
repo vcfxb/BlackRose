@@ -58,7 +58,7 @@ pub fn lex_line(cl: Vec<u8>) -> Vec<Vec<char>> {
                 };
             }
         }
-        else if character == ' ' {}
+        else if [' ', '\n'].contains(&character) {}
         else if character.is_numeric() {      //is_numeric hopefully doesnt let in letters
             work_list.push(character);
             let mut continue_loop = true;

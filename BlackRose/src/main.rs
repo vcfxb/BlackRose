@@ -90,7 +90,8 @@ fn run_prompt(inlist: &[&str]) {
         let lexed_line = lexer::LexedLine{ line_num: full_line.line_num, line: lexer::lex_line(full_line.line), original_line: full_line.original_line };
         print!("{}:>>> ", lexed_line.line_num);
         for word in lexed_line.line {
-            print!("{:?} ", word);
+            let w: String = word.into_iter().collect();
+            print!("\"{}\", ", w);
         }
         println!();
         match io::stdout().flush() {
@@ -113,5 +114,3 @@ fn run_prompt(inlist: &[&str]) {
 //         except KeyboardInterrupt:
 //             print('\nexit')
 //             sys.exit(0)
-//
-// main(sys.argv)
