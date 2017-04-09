@@ -11,7 +11,7 @@ if cmnd.returncode != 0:
 elif int(cmnd.stdout[8:10]) >= 16:
     pass
 else:
-    sys.exit("Rust version 1.16.0 or higher required. Your version is {}".format(cmnd1.stdout[8:12]))
+    sys.exit("Rust version 1.16.0 or higher required. Your version is {}".format(cmnd.stdout[8:12]))
 
 for a in ["blackrose", "radon"]:
     cmnd = run(["chmod", "+x", "{}/bin/{}".format(dir_path, a)])
@@ -30,4 +30,6 @@ if cmnd.returncode != 0:
     print(cmnd.stdout)
     sys.exit("\n\nCould not build Radon!\n\n")
 
-print("\nMake sure to add BlackRose's bin to your PATH variable.\n")
+os.environ["PATH"] += os.pathsep + dir_path + "/bin"
+
+print("\nPlease remember to add {} to your PATH.\n".format(dir_path+"/bin"))
