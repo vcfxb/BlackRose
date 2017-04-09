@@ -2,6 +2,7 @@ extern crate blackrose;
 use blackrose::blackroseerrors as errors;
 use blackrose::preproc;
 use blackrose::lexer;
+use blackrose::parser;
 use std::env;
 use std::fs::File;
 use std::io::{self, Read, Write};
