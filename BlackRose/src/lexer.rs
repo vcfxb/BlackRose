@@ -95,7 +95,7 @@ pub fn lex_line(cl: Vec<u8>) -> Vec<Vec<char>> {
                 };
             }
         }
-        else if ['(', ')', '.', ';', '{', '}', ':', ','].contains(&character) {
+        else if ['(', ')', '.', ';', '{', '}', ','].contains(&character) {
             work_list.push(character);
         }
         // Special characters
@@ -111,6 +111,19 @@ pub fn lex_line(cl: Vec<u8>) -> Vec<Vec<char>> {
                 },
                 None => break,
             };
+        }
+        else if character == ':' {
+            work_list.push(':');
+            match char_list.pop() {
+                Some(n) => {
+                    if n == ':' {
+                        work_list.push(n);
+                    } else {
+                        char_list.push(n);     // if not one of the desired characters here, put it back
+                    }
+                },
+                None => break,
+            }
         }
         else if character == '-' {
             work_list.push('-');        // aka the character

@@ -1,0 +1,17 @@
+# Fibonacci sequence in BlackRose.
+# All typing is done explicitly here
+fn fibonacci(n: Int): Int {
+    if n in [0,1] {
+        return(n);
+    } else {
+        return(fibonacci(n-1)+fibonacci(n-2));
+    }
+}
+
+fn fib_list(n: Int): [Int:n] {
+    list: [Int::] = [];
+    for x in 0 -> n {               # let ranges/list compressions be simple.
+        list.push(fibonacci(x));
+    }
+    return(fib_list);
+}
