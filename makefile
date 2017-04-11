@@ -1,7 +1,4 @@
-all: main
-
-main:
-	python BUILD.py
+all: travis
 
 travis: theblackrose radon
 

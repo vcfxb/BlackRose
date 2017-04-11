@@ -42,6 +42,9 @@ fn main(){
             },
         };
         let optimized: u8 = args[3].parse().unwrap();
+        // compile-unoptimized is 0
+        // interpret tree-walk is 1
+        // compile-optimized is 2
         run_file(contents, out_file, &args[1], optimized);
     } else if args.len() == 1 {
         let prompt = vec!["radon"];
@@ -56,12 +59,13 @@ fn main(){
 fn run_file(s: String, mut output: File, file_name: &str, optimize: u8) {
     let p: Vec<preproc::UTF8Line> = preproc::preprocessor(&s);
     let l: Vec<lexer::LexedLine> = lexer::lex_lines(p);
-    for i in l {
-        print!("{}:Lexed:    ", i.line_num);
-        for u in i.line {
-            print!("{:?} ", u);
-        }
-        println!();
+    let parsed: Vec<parser::ParsedLine> = parser::parse_lines(l);
+    for i in parsed {
+        let line = match i.statement {
+            parser::Stmnt::None => "None",
+            _ => "Unknown",
+        };
+        println!("{}:Parsed:   {}", i.line_num, line);
         println!("{}:Original: {}", i.line_num ,i.original_line);
     }
 }
@@ -105,12 +109,3 @@ fn run_prompt(inlist: &[&str]) {
         current_line += 1;
     }
 }
-
-// def run_prompt(prompt):
-//     while True:
-//         try:
-//             t = input(':'.join(prompt))
-//             print(lex_line(preproc([t])))
-//         except KeyboardInterrupt:
-//             print('\nexit')
-//             sys.exit(0)
