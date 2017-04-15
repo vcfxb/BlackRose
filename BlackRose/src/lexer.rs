@@ -117,7 +117,7 @@ pub fn lex_line(cl: Vec<u8>) -> Vec<Vec<char>> {
             match char_list.pop() {
                 Some(n) => {
                     if n == ':' {
-                        work_list.push(n);
+                        work_list.push(':');
                     } else {
                         char_list.push(n);     // if not one of the desired characters here, put it back
                     }

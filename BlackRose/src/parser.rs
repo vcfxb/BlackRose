@@ -6,30 +6,25 @@ pub fn parse_line(lexed_line: LexedLine) -> ParsedLine {
         ret_stmnt = Stmnt::None;
     } else {
         let mut word_stack = vec![];
-        for word in lexed_line {
+        for word in lexed_line.line {
             word_stack.push(word.into_iter().collect());
         }
-        word_stack.reverse(); // Set up stack
-        loop {
-            let word;
-            if let Some(n) = word_stack.pop() {     //if let statement is easier/better than match statement
-                word = n;
-            }
-            else {
-                    break;          // stop at end of line
-                };
-            if word == "(" {
-                let parens: usize = 1;
-                while parens > 0 {
-                    word_stack
-                }
-            }
-            else {
-
-            }
-        }
+        ret_stmnt = parse_vec(word_stack);
     }
     return ParsedLine{ original_line: lexed_line.original_line, line_num:lexed_line.line_num, statement: ret_stmnt }
+}
+
+fn parse_vec<'c>(line: Vec<Vec<char>>) -> Stmnt<'c> {
+    let mut index: usize = 0;
+    let mut ret_statement : Stmnt = Stmnt::None;
+    loop {
+        match line[index] {
+            _ => {
+                break;
+            },
+        }
+    }
+    return ret_statement;
 }
 
 pub fn parse_lines(lexed_lines: Vec<LexedLine>) -> Vec<ParsedLine> {
@@ -46,14 +41,31 @@ pub struct ParsedLine<'a> {
     pub statement: Stmnt<'a>,
 }
 
-pub struct Type<'a> {
-    pub type_vec: Vec<&'a str>,         // 'Tuple-Typing'
+pub enum Type { //tuple typing
+    Bool,
+    I8,
+    I16,
+    I32,
+    I64,
+    I128,
+    ISize,
+    Int,
+    U8,
+    U16,
+    U32,
+    U64,
+    U128,
+    USize,
+    String,
+    SetArray(Box<Type>), // Array of set size
+    Array(Box<Type>),  // contains a single type
+    List,       // can contain many of any type?
 }
 
 pub enum Stmnt<'a> {
     Vardec {
         id: Expr<'a>,
-        given_type: Type<'a>,
+        given_type: Vec<Type>,
     },
     Assign {
         id: Expr<'a>,
@@ -61,8 +73,11 @@ pub enum Stmnt<'a> {
     },
     VarDecAssign {
         id: Expr<'a>,
-        given_type: Type<'a>,
+        given_type: Vec<Type>,
         val: Expr<'a>,
+    },
+    Expr {
+      expression: Expr<'a>,
     },
     None,
 
