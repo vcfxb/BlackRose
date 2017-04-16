@@ -1,6 +1,6 @@
 machine:
   timezone:
-    America/Boston
+    America/New_York
 
 dependencies:
   pre:
