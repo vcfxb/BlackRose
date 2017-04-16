@@ -57,18 +57,25 @@ pub fn lex_line(cl: Vec<u8>) -> Vec<Vec<char>> {
                     None => break,
                 };
             }
-        }
+        }   // Quotes first
         else if [' ', '\n'].contains(&character) {}
-        else if character.is_numeric() {      //is_numeric hopefully doesnt let in letters
+        else if character.is_numeric() {      //is_numeric hopefully doesn't let in letters
             work_list.push(character);
             let mut continue_loop = true;
+            let mut used_decimal = false;
             while continue_loop == true {
                 match char_list.pop() {     // stop at end of line
                     Some(n) => {
                         if n.is_numeric() {
                             work_list.push(n);
                         } else if n == '.' {
-                            work_list.push(n);
+                            if !used_decimal {
+                                work_list.push('.');  // TODO: Used Decimal, Hex, Binary number processing
+                            }
+                            else {
+                                continue_loop = false;
+                                char_list.push('.');
+                            }
                         } else {
                             char_list.push(n);     // if not one of the desired characters here, put it back
                             continue_loop = false;
@@ -76,6 +83,61 @@ pub fn lex_line(cl: Vec<u8>) -> Vec<Vec<char>> {
                     },
                     None => break,
                 };
+            }
+            if work_list == ['0'] {
+                let mut binary = false;
+                let mut hex = false;
+                match char_list.pop() {     // stop at end of line
+                    Some(n) => {
+                        if ['x','b'].contains(&n) { // x: hexadecimal, b: binary
+                            work_list.push(n);
+                            continue_loop = true;
+                            if n == 'x' {
+                                hex = true;
+                                binary = false;
+                            } else if n == 'b' {
+                                hex = false;
+                                binary = true;
+                            }
+                        } else {
+                            char_list.push(n);     // if not one of the desired characters here, put it back
+                            continue_loop = false;
+                        }
+                    },
+                    None => break,
+                };
+                while continue_loop == true {
+                    match char_list.pop() {     // stop at end of line
+                        Some(n) => {
+                            if (['A','a','b','B','C','c','d','D','E','e','f','F'].contains(&n)) | (n.is_numeric()) {
+                                if binary {
+                                    if (n == '1') | (n == '0') {
+                                        work_list.push(n);
+                                    } else {
+                                        char_list.push(n);
+                                        continue_loop = false;
+                                    }
+                                } else if hex {
+                                    work_list.push(n);
+                                } else {
+                                    panic!("Number Doesn't Make Sense!");       // In theory don't put panics in, but here, its fine.
+                                }
+                            } else if n == '.' {
+                                if !used_decimal {
+                                    work_list.push('.');
+                                }
+                                else {
+                                    continue_loop = false;
+                                    char_list.push('.');
+                                }
+                            } else {
+                                char_list.push(n);     // if not one of the desired characters here, put it back
+                                continue_loop = false;
+                            }
+                        },
+                        None => break,
+                    };
+                }
             }
         }
         else if character.is_alphanumeric() {
@@ -168,7 +230,7 @@ pub fn lex_line(cl: Vec<u8>) -> Vec<Vec<char>> {
             work_list.push('<');
             match char_list.pop() {     // stop at end of line
                 Some(n) => {
-                    if n == '=' {
+                    if (n == '=') | (n == '-') {
                         work_list.push(n);
                     } else {
                         char_list.push(n);     // if not one of the desired characters here, put it back
