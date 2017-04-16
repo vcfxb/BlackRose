@@ -1,12 +1,13 @@
 use std::process;
 
 fn get_err_sig(error: &str) -> (i32, i32) {
-    match error {               // this is essentially a Hash table?
-        "NoError" => (0,1),
+    match error {
+        "NoError" => (0,0),
         "ArgumentError" => (1,2),
         "InvalidCharacterError" => (1,3),
         "WriteOutError" => (1,4),
-        _ => (1,0),
+        "SyntaxError" => (1,5),
+        _ => (1,1),
     }
 }
 pub struct Error<'a> {

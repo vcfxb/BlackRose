@@ -92,10 +92,24 @@ fn run_prompt(inlist: &[&str]) {
         };
         let full_line = preproc::interactive_preprocessor(&buffer, current_line);
         let lexed_line = lexer::LexedLine{ line_num: full_line.line_num, line: lexer::lex_line(full_line.line), original_line: full_line.original_line };
-        print!("{}:>>> ", lexed_line.line_num);
-        for word in lexed_line.line {
-            let w: String = word.into_iter().collect();
-            print!("\"{}\", ", w);
+        let parsed_line = parser::parse_line(lexed_line);
+        print!("{}:>>> ", parsed_line.line_num);
+        match parsed_line.statement {
+            parser::Stmnt::None => {
+                print!("None");
+            },
+            parser::Stmnt::Expr{expression: e} => {
+                print!("Expression");
+            },
+            parser::Stmnt::Assign{id: i, val: v} => {
+                print!("Variable Assignment");
+            },
+            parser::Stmnt::Vardec{id: i, given_type: t} => {
+                print!("Variable Declaration");
+            },
+            parser::Stmnt::VarDecAssign{id: i, given_type:t, val: v} => {
+                print!("Variable Declaration and Assignment");
+            },
         }
         println!();
         match io::stdout().flush() {
