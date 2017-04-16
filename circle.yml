@@ -2,9 +2,6 @@ machine:
   timezone:
     America/New_York
 
-dependencies:
-  - curl https://sh.rustup.rs -sSf | sh
-
 compile:
   - python3.5 BUILD.py
 
