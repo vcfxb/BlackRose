@@ -3,12 +3,12 @@ machine:
     America/New_York
 
 dependencies:
-  curl https://sh.rustup.rs -sSf | sh
+  - curl https://sh.rustup.rs -sSf | sh
 
 compile:
-  python3.5 BUILD.py
+  - python3.5 BUILD.py
 
 test:
-  ./bin/blackrose -v
-  
+  - ./bin/blackrose -v
+
 
