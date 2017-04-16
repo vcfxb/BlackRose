@@ -1,10 +1,10 @@
 # Black Rose programming Language and Radon VM
 ## Not anywhere near ready for use.
 #### Status
-Branch | Travis CI
------- | ---------
-Master | [![Build Status](https://travis-ci.org/Alfriadox/BlackRose.svg?branch=master)](https://travis-ci.org/Alfriadox/BlackRose)
-Stable | [![Build Status](https://travis-ci.org/Alfriadox/BlackRose.svg?branch=stable)](https://travis-ci.org/Alfriadox/BlackRose)
+Branch | Travis CI | Circle CI
+------ | --------- | --------- 
+Master | [![Build Status](https://travis-ci.org/Alfriadox/BlackRose.svg?branch=master)](https://travis-ci.org/Alfriadox/BlackRose) | 
+Stable | [![Build Status](https://travis-ci.org/Alfriadox/BlackRose.svg?branch=stable)](https://travis-ci.org/Alfriadox/BlackRose) | 
 
 #### Installing
 
