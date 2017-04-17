@@ -1,14 +1,17 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python3.5
 # imports
 import curses, locale, sys, os
 from json import loads as decodeJson
 
-version = sys.argv[1]
+
 locale.setlocale(locale.LC_ALL, '')
 code = locale.getpreferredencoding()
 homef = open(os.path.dirname(os.path.abspath(__file__))+'/home.txt', 'r')
 home = homef.readlines()
-
+homef.close()
+versionf = open(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))+'/VERSION', 'r')
+version = versionf.read()
+versionf.close()
 # Initialize screen
 docs = curses.initscr()
 curses.start_color()
@@ -113,11 +116,13 @@ def draw(bodylinelist=home, subsection=['home'], searchprompt='Search documentat
     finally:
         curses.endwin()
 
+
 class SearchResult:
     def __init__(self, aname, adesk, aunimplemented):
         self.name = aname
         self.description = adesk
         self.unimplemented = aunimplemented
+
 
 class Search:
     def __init__(self, sterm):
@@ -135,13 +140,10 @@ class Search:
             if self.term.lower().replace(' ','') in decoded["tags"]:
                 self.results.append(SearchResult(decoded["name"], decoded["desc"], not decoded["implemented"]))
                 self.files[self.files.index(efile)] = None
-            if desc == True:
-                if self.term in decoded["tags"]:
+            elif desc == True:
+                if (self.term in decoded["tags"]) | (self.term in ''.join(decoded["desc"])):
                     self.results.append(SearchResult(decoded["name"], decoded["desc"], not decoded["implemented"]))
-                    self.files[self.files.index(efile)] = None
-                elif self.term in ''.join(decoded["desc"]):
-                    self.results.append(SearchResult(decoded["name"], decoded["desc"], not decoded["implemented"]))
-                    self.files[self.files.index(efile)] = None
+                    #self.files[self.files.index(efile)] = None
             f.close()
         return self.results
 
@@ -158,8 +160,6 @@ def drawSearch(search_term, descriptive = False, searchprompt = 'Search document
     try:
         while True:
             try:
-                # vars
-                charsmax = width-3-len(searchprompt)
                 # clear buffer
                 docs.clear()
                 # titles
@@ -209,6 +209,7 @@ def drawSearch(search_term, descriptive = False, searchprompt = 'Search document
                 # wait for char
                 if searching == False:
                     inchar = docs.getch()
+                    descSearch = False
                     if inchar == ord('q'):
                         curses.endwin()
                         sys.exit(0)
@@ -216,6 +217,10 @@ def drawSearch(search_term, descriptive = False, searchprompt = 'Search document
                         draw()
                     elif inchar == ord('s'):
                         searching = True
+                        continue
+                    elif inchar == ord('S'):
+                        searching = True
+                        descSearch = True
                         continue
                     elif inchar == curses.KEY_UP:
                         if selected[1] == 0:
@@ -229,10 +234,10 @@ def drawSearch(search_term, descriptive = False, searchprompt = 'Search document
                     elif inchar == curses.KEY_DOWN:
                         if selected[1] == len(search_results)-1:
                             continue
-                        elif selected[0] < numberresults:
+                        elif selected[0] < numberresults-1:
                             selected[0] += 1
                             selected[1] += 1
-                        elif selected[0] == numberresults:
+                        elif selected[0] == numberresults-1:
                             selected[1] += 1
                             selected[2] += 1
                     elif inchar == ord('\n'):
@@ -243,7 +248,7 @@ def drawSearch(search_term, descriptive = False, searchprompt = 'Search document
                         pass
                 elif searching == True:
                     instr = docs.getstr().decode(code)
-                    drawSearch(instr)
+                    drawSearch(instr, descSearch)
                     searching = False
             except KeyboardInterrupt:
                 break
@@ -259,7 +264,6 @@ def drawSelect(result, searchprompt = 'Search documentation: '):
     for line in result.description:
         body.append("  "+line)
     draw(body,['home',result.name],searchprompt)
-
 
 
 draw()

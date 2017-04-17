@@ -11,13 +11,14 @@ os:
   - osx
 
 install:
-  - make theblackrose
-  - make radon
+  - make -C BlackRose
+  - chmod +x ./bin/blackrose
+  - chmod +x ./bin/oldrose
 
 script:
-  - ./bin/blackrose -v
-  - ./bin/blackrose -o BlackRoseExamples/HelloWorld.debug.radon BlackRoseExamples/HelloWorld.rose
-  - ./bin/blackrose -O -o BlackRoseExamples/HelloWorld.debug.radon BlackRoseExamples/HelloWorld.rose
+  - ./bin/oldrose -v
+  - ./bin/oldrose -o BlackRoseExamples/HelloWorld.debug.radon BlackRoseExamples/HelloWorld.rose
+  - ./bin/oldrose -O -o BlackRoseExamples/HelloWorld.debug.radon BlackRoseExamples/HelloWorld.rose
 
 matrix:
   allow_failures:

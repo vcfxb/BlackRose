@@ -42,12 +42,14 @@ fn main(){
             },
         };
         let optimized: u8 = args[3].parse().unwrap();
-        // compile-unoptimized is 0
+        // compile-unoptimized-full is 0
         // interpret tree-walk is 1
-        // compile-optimized is 2
+        // compile-optimized-full is 2
+        // compile to rust-debug is 3
+        // compile to rust-optimized is 4
         run_file(contents, out_file, &args[1], optimized);
     } else if args.len() == 1 {
-        let prompt = vec!["radon"];
+        let prompt = vec!["BlackRose"];
         run_prompt(&prompt);
     } else {
         let arglenstring = (args.len()-1).to_string();

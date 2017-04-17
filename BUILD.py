@@ -1,5 +1,6 @@
 #!/usr/bin/env python3.5
 import subprocess, sys, os
+
 run = subprocess.run
 output_info = subprocess.CompletedProcess
 PIPE = subprocess.PIPE
@@ -13,7 +14,7 @@ elif int(cmnd.stdout[8:10]) >= 16:
 else:
     sys.exit("Rust version 1.16.0 or higher required. Your version is {}".format(cmnd.stdout[8:12]))
 
-for a in ["blackrose", "radon"]:
+for a in ["blackrose"]:     # just blackrose, now that radon has been removed
     cmnd = run(["chmod", "+x", "{}/bin/{}".format(dir_path, a)])
     if cmnd.returncode != 0:
         sys.exit("Error in making bin files executable!")
@@ -24,12 +25,5 @@ if cmnd.returncode != 0:
     print(cmnd.stdout)
     sys.exit("\n\nCould not build BlackRose!\n\n")
 
-os.chdir("{}/RadonVM".format(dir_path))
-cmnd = run(["cargo", "build", "--release"], stdout=PIPE, universal_newlines=True)
-if cmnd.returncode != 0:
-    print(cmnd.stdout)
-    sys.exit("\n\nCould not build Radon!\n\n")
-
-os.environ["PATH"] += os.pathsep + dir_path + "/bin"
 
 print("\nPlease remember to add {} to your PATH.\n".format(dir_path+"/bin"))

@@ -1,4 +1,4 @@
 all: blackrose
 
 blackrose:
-	cargo build --release
+	- cargo build --release

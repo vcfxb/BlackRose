@@ -70,7 +70,7 @@ pub fn lex_line(cl: Vec<u8>) -> Vec<Vec<char>> {
                             work_list.push(n);
                         } else if n == '.' {
                             if !used_decimal {
-                                work_list.push('.');  // TODO: Used Decimal, Hex, Binary number processing
+                                work_list.push('.');
                             }
                             else {
                                 continue_loop = false;
@@ -138,7 +138,7 @@ pub fn lex_line(cl: Vec<u8>) -> Vec<Vec<char>> {
                         None => break,
                     };
                 }
-            }
+            } //specialnumbers
         }
         else if character.is_alphanumeric() {
             work_list.push(character);
