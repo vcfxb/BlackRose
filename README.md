@@ -1,3 +1,5 @@
+# OBSOLETE :: NOT BEING MAINTAINED
+
 # Black Rose programming Language and Radon VM
 ## Not anywhere near ready for use.
 #### Status
